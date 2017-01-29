@@ -429,6 +429,10 @@ class GoBoard(object):
                 if self.board[n]!=EMPTY:
                     fboard = self._flood_fill(n)
                     if not self._liberty_flood(fboard):
+                        msg = "remember - no Russian"
+                        print("no russian")
+                        self.board[point] = EMPTY
+                        return False, msg
                         cap_inds = fboard==FLOODFILL
                         #self.caps = np.where(fboard==FLOODFILL)
                         self.caps += list(*np.where(fboard==FLOODFILL))
