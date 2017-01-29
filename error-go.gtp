@@ -1,0 +1,5 @@
+10 play b a1
+#? []
+
+20 play w a1
+#? [Illegal Move: a1]

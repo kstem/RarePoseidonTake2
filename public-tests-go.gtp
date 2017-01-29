@@ -1,0 +1,36 @@
+# public test file to illustrate the differences between Go and NoGo.
+# This test is written for Go.
+
+boardsize 3
+clear_board
+
+play b a3
+10 legal_moves w
+#? [a1 a2 b1 b2 b3 c1 c2 c3]
+
+play w b3
+20 legal_moves b
+#? [a1 a2 b1 b2 c1 c2 c3]
+
+play b c3
+30 legal_moves w
+#? [a1 a2 b1 b2 c1 c2]
+
+play w b2
+40 legal_moves b
+#? [a1 a2 b1 c1 c2]
+
+play b c2
+50 legal_moves w
+#? [a1 a2 b1 c1]
+# So far, all empty points are legal in Go rules
+
+play w a1
+60 legal_moves b
+#? [b1 c1]
+# But now, a2 is suicide for black
+
+play b c1
+70 legal_moves w
+#? [a2 b1]
+# Both moves are captures, legal in Go

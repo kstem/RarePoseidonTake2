@@ -1,0 +1,39 @@
+# public test file to illustrate the differences between Go and NoGo.
+# This test is written for NoGo.
+
+boardsize 3
+clear_board
+
+play b a3
+10 legal_moves w
+#? [a1 a2 b1 b2 b3 c1 c2 c3]
+
+play w b3
+20 legal_moves b
+#? [a1 a2 b1 b2 c1 c2 c3]
+# So far, all empty points are legal in NoGo rules.
+
+play b c3
+30 legal_moves w
+#? [a1 b1 b2 c1]
+# a2 and c2 are captures, illegal in NoGo.
+
+play w b2
+40 legal_moves b
+#? [a1 a2 b1 c1 c2]
+# For Black, all empty points are still legal in NoGo rules.
+
+play b c2
+50 legal_moves w
+#? [a1 b1]
+# a2 and c32 are captures.
+
+play w a1
+60 legal_moves b
+#? [b1 c1]
+# Now a2 is suicide for black
+
+play b c1
+70 legal_moves w
+#? []
+# Both moves are captures, illegal in NoGo. Game over, Black wins.
