@@ -27,8 +27,10 @@ class GoBoard(object):
             color
         """
         move_inspection, msg =self._play_move(point,color)
-        if not move_inspection:
-            return False
+        if not move_inspection: # here when move is not legal
+            print("not move_inspection") # remove
+            print("Illegal Move: ",msg)
+            return False, msg
         else:
             self.last_played_color = color
             return True
@@ -431,7 +433,9 @@ class GoBoard(object):
                     fboard = self._flood_fill(n)
                     if not self._liberty_flood(fboard):
                         msg = "remember - no Russian"
-                        #print("no russian")
+                        print("no russian")
+                        c=self._point_to_coord(point)
+                        msg = " %s %d %d capture"%(color, c[0],c[1])
                         self.board[point] = EMPTY
                         return False, msg
                         # this stuff we shouldn't need since no caps allowed - adam
