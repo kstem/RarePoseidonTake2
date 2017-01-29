@@ -14,7 +14,7 @@ import re
 
 class GtpConnection():
 
-    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = False):
+    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = True):
         """
         object that plays Go using GTP
 
