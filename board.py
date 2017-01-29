@@ -140,10 +140,11 @@ class GoBoard(object):
         for y in range(1,self.size+1,1):
             for x in range(1,self.size+1,1):
                 point = self._coord_to_point(x,y)
-                if self.get_color(point)!=EMPTY:
+                if self.get_color(point)!=EMPTY: # I don't know what this does - adam
                     continue
-                if self.is_eye(point,color):
-                    continue
+                if self.is_eye(point,color): #possibly the conditional that filters out eye of same color moves for random player - adam
+                    print("Hi! I found a friendly eye!")
+                    #continue
                 if self.ko_constraint==point:
                     continue
                 moves.append(point)
@@ -437,6 +438,7 @@ class GoBoard(object):
                         msg = " %s %d %d capture"%(color, c[0],c[1])
                         self.board[point] = EMPTY
                         return False, msg
+                        # this stuff we shouldn't need since no caps allowed - adam
                         """
                         cap_inds = fboard==FLOODFILL
                         #self.caps = np.where(fboard==FLOODFILL)
@@ -455,7 +457,7 @@ class GoBoard(object):
                             print("pls no black caps")
                         self.board[cap_inds]=EMPTY
                         """
-        in_enemy_eye = self._is_eyeish(point) != color
+        in_enemy_eye = self._is_eyeish(point) != color # I think keep this as no suicide is still a thing - adam
         fboard = self._flood_fill(point)
         self.ko_constraint = single_captures[0] if in_enemy_eye and len(single_captures) == 1 else None
         #if self._liberty_flood(fboard) and self.suicide: #commented out original to test what self.suicide did since it's just set for True
@@ -463,13 +465,16 @@ class GoBoard(object):
             #non suicidal move
             c=self._point_to_coord(point)
             msg = "Playing a move with %s color in the row and column %d %d is permited"%(color,c[0],c[1])
+            print("Playing a move with %s color in the row and column %d %d is permited"%(color,c[0],c[1]))
             return True, msg
         else:
             # undoing the move because of being suicidal
             self.board[point] = EMPTY
             if cap_inds!= None:
+                #TODO: must see what this does
                 self.board[cap_inds]=GoBoardUtil.opponent(color)
             c=self._point_to_coord(point)
+            print("Playing a move with %s color in the row and column %d %d IS WRONG"%(color,c[0],c[1]))
             msg = "Suicide move with color %s in the row and column: %d %d "%(color, c[0],c[1])
             return False, msg
 
