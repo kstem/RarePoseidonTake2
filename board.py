@@ -433,6 +433,7 @@ class GoBoard(object):
                         print("no russian")
                         self.board[point] = EMPTY
                         return False, msg
+                        """
                         cap_inds = fboard==FLOODFILL
                         #self.caps = np.where(fboard==FLOODFILL)
                         self.caps += list(*np.where(fboard==FLOODFILL))
@@ -449,20 +450,14 @@ class GoBoard(object):
                             #self.black_captures += num_captures
                             print("pls no black caps")
                         self.board[cap_inds]=EMPTY
+                        """
         in_enemy_eye = self._is_eyeish(point) != color
         fboard = self._flood_fill(point)
         self.ko_constraint = single_captures[0] if in_enemy_eye and len(single_captures) == 1 else None
-        if self._liberty_flood(fboard) and self.suicide:
+        #if self._liberty_flood(fboard) and self.suicide: #commented out original to test what self.suicide did since it's just set for True
+        if self._liberty_flood(fboard):
             #non suicidal move
             c=self._point_to_coord(point)
-            """
-            if cap_inds != None:
-                #just a quick check to see if this denies making a cap move
-                #UPDATE - this alone did not deny a cap move
-                msg = "remember - no Russian"
-                print(msg)
-                return False, msg
-                """
             msg = "Playing a move with %s color in the row and column %d %d is permited"%(color,c[0],c[1])
             return True, msg
         else:
