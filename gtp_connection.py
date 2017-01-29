@@ -14,7 +14,7 @@ import re
 
 class GtpConnection():
 
-    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = False):
+    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = True):
         """
         object that plays Go using GTP
 
@@ -291,9 +291,12 @@ class GtpConnection():
             board_color = args[0].lower()
             board_move = args[1]
             color= GoBoardUtil.color_to_int(board_color)
+            #TODO: hi need to fix the pass as passing isn't allowed - adam
             if args[1].lower()=='pass':
                 self.debug_msg("Player {} is passing\n".format(args[0]))
-                self.respond()
+                #self.respond()
+                self.respond("game over, no passing allowed scrub")
+                self.respond(self.board.final_score(self.komi))
                 return
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
             if move:
@@ -312,7 +315,10 @@ class GtpConnection():
             self.respond('Error: {}'.format(str(e)))
 
     def final_score_cmd(self, args):
-        self.respond(self.board.final_score(self.komi))
+        self.respond("Final Score: " + self.board.final_score(self.komi))
+        self.respond("Thanks for playing, Goodbye.")
+        self.respond("ＡＥＳＴＨＥＴＩＣ")
+        quit()
 
     def genmove_cmd(self, args):
         """
@@ -334,7 +340,10 @@ class GtpConnection():
             move = self.go_engine.get_move(self.board, color)
             if move is None:
                 self.respond("pass")
-                return
+                self.respond("Lol no moves left GG gtfo with that pass bullshit.")
+                self.final_score_cmd([])
+                #quit()
+                #return
 
             if not self.board.check_legal(move, color):
                 move = self.board._point_to_coord(move)
@@ -343,6 +352,7 @@ class GtpConnection():
                 raise RuntimeError("Illegal move given by engine")
 
             # move is legal; play it
+            self.debug_msg("Color: " + board_color + " ")
             self.board.move(move,color)
 
             self.debug_msg("Move: {}\nBoard: \n{}\n".format(move, str(self.board.get_twoD_board())))
