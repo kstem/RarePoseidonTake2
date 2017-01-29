@@ -436,11 +436,14 @@ class GoBoard(object):
                         if num_captures == self.size*self.size:
                             self._is_empty = True
                         if num_captures == 1:
-                            single_captures.append(n)
+                            #single_captures.append(n)
+                            print("pls no caps")
                         if color==WHITE:
-                            self.white_captures += num_captures
+                            #self.white_captures += num_captures
+                            print("pls no white caps")
                         else :
-                            self.black_captures += num_captures
+                            #self.black_captures += num_captures
+                            print("pls no black caps")
                         self.board[cap_inds]=EMPTY
         in_enemy_eye = self._is_eyeish(point) != color
         fboard = self._flood_fill(point)
@@ -448,6 +451,12 @@ class GoBoard(object):
         if self._liberty_flood(fboard) and self.suicide:
             #non suicidal move
             c=self._point_to_coord(point)
+            if cap_inds != None:
+                #just a quick check to see if this denies making a cap move
+                #UPDATE - this alone did not deny a cap move
+                msg = "remember - no Russian"
+                print(msg)
+                return False, msg
             msg = "Playing a move with %s color in the row and column %d %d is permited"%(color,c[0],c[1])
             return True, msg
         else:
