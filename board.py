@@ -455,12 +455,14 @@ class GoBoard(object):
         if self._liberty_flood(fboard) and self.suicide:
             #non suicidal move
             c=self._point_to_coord(point)
+            """
             if cap_inds != None:
                 #just a quick check to see if this denies making a cap move
                 #UPDATE - this alone did not deny a cap move
                 msg = "remember - no Russian"
                 print(msg)
                 return False, msg
+                """
             msg = "Playing a move with %s color in the row and column %d %d is permited"%(color,c[0],c[1])
             return True, msg
         else:
