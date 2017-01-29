@@ -14,7 +14,7 @@ glossary:
 
 
 import numpy as np
-from board_util import GoBoardUtil, BLACK, WHITE, EMPTY, BORDER, FLOODFILL 
+from board_util import GoBoardUtil, BLACK, WHITE, EMPTY, BORDER, FLOODFILL
 
 class GoBoard(object):
 
@@ -28,8 +28,8 @@ class GoBoard(object):
         """
         move_inspection, msg =self._play_move(point,color)
         if not move_inspection: # here when move is not legal
-            print("not move_inspection") # remove
-            print("Illegal Move: ",msg)
+          #  print("not move_inspection") # remove
+            print("illegal Move: ",msg)
             return False, msg
         else:
             self.last_played_color = color
@@ -127,14 +127,14 @@ class GoBoard(object):
             board[i,:] = self.board[row:row+self.size]
         return board
 
-        
+
     def get_empty_positions(self, color):
         """
         Argumnets:
             color
         This function return a list of moves for current player.
         Return:
-            list of empty poisitions by excluding eye points and KO constraint points 
+            list of empty poisitions by excluding eye points and KO constraint points
         """
         moves = []
         for y in range(1,self.size+1,1):
@@ -195,7 +195,7 @@ class GoBoard(object):
         This is an example of 3x3 board point numbering (indices of numpy array).
         Spaces are added for illustration to separate board points from border points.
         Note that there is only one point buffer between each row (e.g. point 12).
-        
+
         16   17 18 19   20
 
         12   13 14 15   16
@@ -215,7 +215,7 @@ class GoBoard(object):
 
         """
         self.board = np.ones((self.maxpoint),dtype=np.int16)*BORDER
-        self._empty_filling(self.board) 
+        self._empty_filling(self.board)
 
 
     def copy(self):
@@ -233,7 +233,7 @@ class GoBoard(object):
         b.current_player = self.current_player
         b.ko_constraint =  self.ko_constraint
         b.white_captures = self.white_captures
-        b.black_captures = self.black_captures 
+        b.black_captures = self.black_captures
 
         return b
 
@@ -283,9 +283,9 @@ class GoBoard(object):
             false_count += 1
         if false_count >= 2:
             return None
-        return eye_color    
-    
-        
+        return eye_color
+
+
     """
     ----------------------------------------------------------------------------------------------------------------------
     helper functions for playing a move!
@@ -303,7 +303,7 @@ class GoBoard(object):
         bool:
              whether the neighbors of the point all have same color
         This is based on https://github.com/pasky/michi/blob/master/michi.py --> is_eyeish
-        
+
         """
         if self.board[point] != EMPTY:
             return None
@@ -413,9 +413,13 @@ class GoBoard(object):
 
         if self.board[point] != EMPTY:
             c=self._point_to_coord(point)
-            stone = self.board[point] # get stone colour currently occupying spot
-            print(stone)
-            msg = "Row and Column: %d %d is already filled with a %s stone"%(c[0],c[1],GoBoardUtil.int_to_color(stone))
+           # stone = self.board[point] # get stone colour currently occupying spot
+           # print(stone)
+           #illegal move: w [location] occupied
+           #TODO: need actual point, eg a4, istead of coords
+
+           
+            msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
             return False,msg
         if point == self.ko_constraint:
             msg ="KO move is not permitted!"
@@ -436,7 +440,7 @@ class GoBoard(object):
                         msg = "remember - no Russian"
                         print("no russian")
                         c=self._point_to_coord(point)
-                        msg = "Move by '%s' would eliminate all liberties at row column %d %d, can not capture "%(GoBoardUtil.int_to_color(color), c[0],c[1]) # no liberties left
+                        msg = "%s %d %d captures"%(GoBoardUtil.int_to_color(color), c[0],c[1]) # no liberties left
                         self.board[point] = EMPTY
                         return False, msg
                         """
@@ -472,7 +476,8 @@ class GoBoard(object):
             if cap_inds!= None:
                 self.board[cap_inds]=GoBoardUtil.opponent(color)
             c=self._point_to_coord(point)
-            msg = "Suicide move with color %s in the row and column: %d %d "%(GoBoardUtil.int_to_color(color), c[0],c[1])
+            #todo: a2 not row column
+            msg = "%s %d %d suicide"%(GoBoardUtil.int_to_color(color), c[0],c[1])
             return False, msg
 
 

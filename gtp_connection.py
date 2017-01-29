@@ -289,7 +289,6 @@ class GtpConnection():
             the move to play (e.g. A5)
         """
         try:
-            print("try me mother fucker") #remove
             board_color = args[0].lower()
             board_move = args[1]
             color= GoBoardUtil.color_to_int(board_color)
@@ -307,8 +306,9 @@ class GtpConnection():
             else:
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
+            self.respond("just before that if statement")
             if not self.board.move(move, color):
-                print("in play_cmd") #Remove
+                self.respond("in play_cmd") #Remove
                 self.respond("Illegal Move: {}".format(board_move), msg)
                 return
             else:
@@ -356,9 +356,8 @@ class GtpConnection():
 
             # move is legal; play it
             self.debug_msg("Color: " + board_color + " ")
-            print("in genmove_cmd")
+           # print("in genmove_cmd")
             self.board.move(move,color)
-
             self.debug_msg("Move: {}\nBoard: \n{}\n".format(move, str(self.board.get_twoD_board())))
             move = self.board._point_to_coord(move)
             board_move = GoBoardUtil.format_point(move)
