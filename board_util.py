@@ -177,8 +177,11 @@ class GoBoardUtil(object):
         try:
            return color_to_int[c] 
         except:
-            raise ValueError("Valid color characters are: b, w, e, BORDER and FLOODFILL. please provide the input in this format ")
-    
+           # raise ValueError("Valid color characters are: b, w, e, BORDER and FLOODFILL. please provide the input in this format ")
+             raise ValueError(color_to_int[c])
+
+
+#####################################################3
     @staticmethod
     def int_to_color(i):
         """convert number representing player color to the appropriate character """

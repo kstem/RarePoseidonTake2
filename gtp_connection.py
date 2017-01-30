@@ -315,7 +315,9 @@ class GtpConnection():
                 self.debug_msg("Move: {}\nBoard:\n{}\n".format(board_move, str(self.board.get_twoD_board())))
             self.respond()
         except Exception as e:
-            self.respond('Error: {}'.format(str(e)))
+            # original: self.respond('Error here get yer error here: {}'.format(str(e)))
+            self.respond("illegal move: {} ".format(str(e))+args[1]+" wrong colour")
+            
 
     def final_score_cmd(self, args):
         self.respond("Final Score: " + self.board.final_score(self.komi))

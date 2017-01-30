@@ -29,7 +29,9 @@ class GoBoard(object):
         move_inspection, msg =self._play_move(point,color)
         if not move_inspection: # here when move is not legal
           #  print("not move_inspection") # remove
-            print("illegal Move: ",msg)
+          #  print("illegal Move: ",msg)
+            raise ValueError("illegal move: ",msg)
+          
             return False, msg
         else:
             self.last_played_color = color
