@@ -1,0 +1,4 @@
+still need it to say 'wrong colour' when you input wrong colour 
+    eg 'play g a2' illegal move: r c3 wrong colo
+
+needs to work with gogui regression testing

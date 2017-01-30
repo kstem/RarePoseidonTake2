@@ -314,7 +314,6 @@ class GtpConnection():
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
             if not self.board.move(move, color):
-                self.respond("in play_cmd") #Remove
                 self.respond("Illegal Move: {}".format(board_move), msg)
                 return
             else:
@@ -322,7 +321,7 @@ class GtpConnection():
             self.respond()
         except Exception as e:
             # original: self.respond('Error here get yer error here: {}'.format(str(e)))
-            self.respond("illegal move: {} ".format(str(e))+args[1]+" wrong colour")
+            self.respond("illegal move: {} ".format(str(e)))#+args[1])#+" wrong colour")
             
 
     def final_score_cmd(self, args):
