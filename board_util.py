@@ -177,9 +177,9 @@ class GoBoardUtil(object):
         try:
            return color_to_int[c] 
         except:
-           # raise ValueError("Valid color characters are: b, w, e, BORDER and FLOODFILL. please provide the input in this format ")
-             raise ValueError(color_to_int[c])
-
+           # original: raise ValueError("Valid color characters are: b, w, e, BORDER and FLOODFILL. please provide the input in this format ")
+            raise ValueError(color_to_int[c]) # dint thin this really does anything
+ 
 
 #####################################################3
     @staticmethod

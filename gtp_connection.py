@@ -63,7 +63,9 @@ class GtpConnection():
             "known_command": (1, 'Usage: known_command CMD_NAME'),
             "set_free_handicap": (1, 'Usage: set_free_handicap MOVE (e.g. A4)'),
             "genmove": (1, 'Usage: genmove {w,b}'),
-            "play": (2, 'Usage: play {b,w} MOVE'),
+            #"play": (2, 'Usage: play {b,w} MOVE'),
+            "play": (2, ' wrong number of arguments'),
+            
             "legal_moves": (1, 'Usage: legal_moves {w,b}')
         }
     
@@ -112,6 +114,8 @@ class GtpConnection():
             return
         command_name = elements[0]; args = elements[1:]
         if self.arg_error(command_name, len(args)):
+            print(' ', args, " wrong number of arguments")
+            sys.stdout.flush()
             return
         if command_name in self.commands:
             try:
@@ -142,6 +146,7 @@ class GtpConnection():
         False otherwise
         """
         if cmd in self.argmap and self.argmap[cmd][0] > argnum:
+               # print("yoyoyo what up from the south side", self.argmap[cmd][1]) remove
                 self.error(self.argmap[cmd][1])
                 return True
         return False
@@ -153,7 +158,9 @@ class GtpConnection():
 
     def error(self, error_msg=''):
         """ Send error msg to stdout and through the GTP connection. """
-        sys.stdout.write('? {}\n\n'.format(error_msg)); sys.stdout.flush()
+        sys.stdout.write('illegal move')
+       #original sys.stdout.write('illegal move: [input]  {}\n\n'.format(error_msg)); sys.stdout.flush()
+       # sys.stdout.write('illegal move: '+elements[0]+' {}\n\n'.format(error_msg))
 
     def respond(self, response=''):
         """ Send msg to stdout """
@@ -306,7 +313,6 @@ class GtpConnection():
             else:
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
-            self.respond("just before that if statement")
             if not self.board.move(move, color):
                 self.respond("in play_cmd") #Remove
                 self.respond("Illegal Move: {}".format(board_move), msg)
