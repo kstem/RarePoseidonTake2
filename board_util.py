@@ -161,9 +161,9 @@ class GoBoardUtil(object):
         except (IndexError, ValueError):
             raise ValueError("invalid point: '%s'" % s)
         if not (col <= board_size and row <= board_size):
-            #raise ValueError("[color] %s wrong coordinate" % s)
-#            board.player_errors(3, None, point)
-            #TODO: need to add color HERE
+            # raise ValueError("[color] %s wrong coordinate" % s)
+            # board.player_errors(3, None, point)
+            # TODO: need to add color HERE
             raise ValueError("point is off board: '%s'" % s)
         return row, col
     
@@ -188,7 +188,7 @@ class GoBoardUtil(object):
             #find somewhere that has the colour of this thing, then from there send it to the player_error thing
  
 
-#####################################################3
+#####################################################
     @staticmethod
     def int_to_color(i):
         """convert number representing player color to the appropriate character """

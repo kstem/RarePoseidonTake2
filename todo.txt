@@ -7,3 +7,36 @@ wrong color issue: player_errors wants an int, but there is not direct integer f
 so wont send letter to the function, but cant alter it into an int
 
 legal_moves with no colour throws an arror for args, 405 in gtp_connection player_errors
+
+
+ERROR TODO:
+todo for errors: 
+
+occupied space mst have error as such --
+	if black stone already there, and white tries to play
+	illegal move: w [location] occupied
+
+_________________________________
+for "play c3" --
+	illegal move: c3 wrong number of arguments
+ ?? -> arg_error -> error -> argmap
+
+___________________________________________________
+play r c3
+	illegal move: r c3 wrong color
+
+_______________________________________________________
+
+play w c99
+	illegal move: w c99 wrong coordinate
+
+_______________________________________________________
+for capturng stone
+	if black is going to capture white -- 	
+	illegal move: b a2 captures
+_______________________________________________________
+
+suicide:
+	illegal move: w a2 suicide
+
+
