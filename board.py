@@ -31,7 +31,7 @@ class GoBoard(object):
         if not move_inspection: # here when move is not legal
           #  print("not move_inspection") # remove
           #  print("illegal Move: ",msg)
-            raise ValueError()          
+           # raise ValueError()          
             return False
         else:
             self.last_played_color = color
@@ -427,15 +427,15 @@ class GoBoard(object):
 
         if self.board[point] != EMPTY:
             c=self._point_to_coord(point)
+            msg = "Row and Column: %d %d is already filled with a %s stone"%(c[0],c[1],GoBoardUtil.int_to_color(color))
            # stone = self.board[point] # get stone colour currently occupying spot
            # print(stone)
            #illegal move: w [location] occupied
            #TODO: need actual point, eg a4, istead of coords
-            print("words and color: ", color)
-            player_errors(1, color, c)
+           # print("words and color: ", color)
+           # player_errors(1, color, c)
            # msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
-            
-            return False, ""
+            return False, msg
         if point == self.ko_constraint:
             msg ="KO move is not permitted!"
             return False , msg
@@ -640,6 +640,8 @@ class GoBoard(object):
   6: suicide
 
 '''
+
+'''
 def player_errors(issue, color, c):
     if issue == 1:
         print('illegal move: %s %s alread occupied'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
@@ -657,8 +659,8 @@ def player_errors(issue, color, c):
         print('bruh whatd you do')
    
 
-
-"""
+'''
+'''
         Return coordinates as a string like 'a1', or 'pass'.
 
         Arguments
@@ -668,8 +670,7 @@ def player_errors(issue, color, c):
         Returns
         -------
         The move converted from a tuple to a Go position (e.g. d4)
-"""
-
+'''
 def coord_to_position(coord):
     column_letters = "abcdefghjklmnopqrstuvwxyz"
     if coord is None:

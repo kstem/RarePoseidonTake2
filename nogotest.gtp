@@ -1,0 +1,12 @@
+#no go tests
+
+boardsize 3
+clearboard
+
+play w b1
+10 legal_moves b
+#? [a1 a2 a3 b2 b3 c1 c2 c3]
+# ensure that black can not play ontop of white
+
+play b b1
+#? [illegal move: b b1 already occupied]
