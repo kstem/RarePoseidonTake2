@@ -14,7 +14,7 @@ import re
 
 class GtpConnection():
 
-    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = False):
+    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = True):
         """
         object that plays Go using GTP
 
@@ -328,7 +328,8 @@ class GtpConnection():
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
             if not self.board.move(move, color):
-                self.respond("Illegal Move: {}".format(board_move), msg)
+               # self.respond("Illegal Move: {}".format(board_move), msg)
+                self.respond("Illegal Move: {}".format(board_move))
                 return
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".format(board_move, str(self.board.get_twoD_board())))
@@ -405,6 +406,7 @@ class GtpConnection():
   
 
 '''
+'''
 def player_errors(issue, color, c, args):
     #arg=args[0]
     if issue == 1:
@@ -431,6 +433,6 @@ def coord_to_position(coord):
         raise ValueError
         #print("yo waddup")
     return column_letters[col-1]+ str(row) 
-            
+  '''          
 
 

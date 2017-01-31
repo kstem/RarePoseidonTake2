@@ -655,8 +655,8 @@ def player_errors(issue, color, c):
         print('bruh whatd you do')
    
 
-
-"""
+'''
+'''
         Return coordinates as a string like 'a1', or 'pass'.
 
         Arguments
@@ -666,8 +666,7 @@ def player_errors(issue, color, c):
         Returns
         -------
         The move converted from a tuple to a Go position (e.g. d4)
-"""
-
+'''
 def coord_to_position(coord):
     column_letters = "abcdefghjklmnopqrstuvwxyz"
     if coord is None:
@@ -678,4 +677,3 @@ def coord_to_position(coord):
         #print("yo waddup")
        # print(column_letters[col-1+ str(row)])
     return column_letters[col-1]+ str(row) 
-    '''
