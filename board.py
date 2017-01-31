@@ -107,7 +107,7 @@ class GoBoard(object):
             result = "B wins due to last play." # -adam
 
         else:
-            #result="W+{}".format(score_white - score_black )
+            #result="W+{}".format(score_white - score_black ) -original
             result = "W wins due to last play." # -adam
 
         return result
@@ -149,8 +149,8 @@ class GoBoard(object):
                     continue
                 if self.is_eye(point,color):
                     ####custom code starts
-                    print(point)
-                    print(color)
+                    #print(point)
+                    #print(color)
                     moves.append(point) #hi, this is to allow same color eye filling - adam
                     ####custom code end
                     continue
