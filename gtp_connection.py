@@ -162,7 +162,7 @@ class GtpConnection():
         """ Send error msg to stdout and through the GTP connection. """
         sys.stdout.write('? {}\n\n'.format(error_msg)); sys.stdout.flush()
         # sys.stdout.write('illegal move')
-        #original sys.stdout.write('illegal move: [input]  {}\n\n'.format(error_msg)); sys.stdout.flush()
+        # original sys.stdout.write('illegal move: [input]  {}\n\n'.format(error_msg)); sys.stdout.flush()
         # sys.stdout.write('illegal move: '+elements[0]+' {}\n\n'.format(error_msg))
 
     def respond(self, response=''):
@@ -264,7 +264,7 @@ class GtpConnection():
             if not self.board.move(point, BLACK):
                 self.debug_msg("Illegal Move: {}\nBoard:\n{}\n".format(move, str(self.board.get_twoD_board())))
                 # print("if not self.board.move --- in set_free_handicap")
-                #self.debug_msg("Illegal Move: {}\nBoard:\n{}\n".format(move, str(self.board.get_twoD_board())))
+                # self.debug_msg("Illegal Move: {}\nBoard:\n{}\n".format(move, str(self.board.get_twoD_board())))
         self.respond()
 
     def legal_moves_cmd(self, args):
@@ -323,9 +323,6 @@ class GtpConnection():
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
             if move:
                 move = self.board._coord_to_point(move[0],move[1])
-                #if GoBoardUtil.generate_random_move(self.board, color) == None:
-                #    print("IN THE FINAL GAME SHOULD BE OVER")
-                #    self.final_score_cmd([])
             # move == None on pass
             else:
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
@@ -341,10 +338,10 @@ class GtpConnection():
                 self.final_score_cmd([])
             self.respond()
         except Exception as e:
-            #  player_errors(1)
-            #here
+            #  player_errors(1) -> attempt to get error woriking for occupied with hack, didnt really - kaleb
+            #  here
             self.respond('{}'.format(str(e)))
-            #self.respond("illegal move: {} ".format(str(e)))#+args[1])#+" wrong colour")
+            #self.respond("illegal move: {} ".format(str(e)))#+args[1])#+" wrong colour") # issue was printed wrong colour for multiople errors - kaleb
             pass
             
             
@@ -400,6 +397,11 @@ class GtpConnection():
                 self.final_score_cmd([])
         except Exception as e:
             self.respond('Error: {}'.format(str(e)))
+
+
+
+# below is attempt to make easy error messaging that failed. - kaleb
+
 
 '''
 #input:
