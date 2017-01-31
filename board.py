@@ -420,7 +420,7 @@ class GoBoard(object):
            # print(stone)
            #illegal move: w [location] occupied
            #TODO: need actual point, eg a4, istead of coords
-
+            print("words and color: ", color)
             player_errors(1, color, c)
            # msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
             
@@ -635,7 +635,7 @@ def player_errors(issue, color, c):
     elif issue == 2:
         print('illegal move: [input] wrong number of arguments') 
     elif issue == 3:
-        print('illegal move: %s %s wrong color'%(color, coord_to_position(c)))
+        print('illegal move: %s %s wrong color'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
     elif issue == 4:
         print('illegal move: [colour] [locaton] wrong coordinate')
     elif issue == 5:
