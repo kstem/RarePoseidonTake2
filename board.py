@@ -144,6 +144,11 @@ class GoBoard(object):
                 if self.get_color(point)!=EMPTY:
                     continue
                 if self.is_eye(point,color):
+                    ####custom code starts
+                    print(point)
+                    print(color)
+                    moves.append(point) #hi, this is to allow same color eye filling - adam
+                    ####custom code end
                     continue
                 if self.ko_constraint==point:
                     continue
@@ -284,6 +289,8 @@ class GoBoard(object):
             false_count += 1
         if false_count >= 2:
             return None
+        print("is_eye has")
+        print(eye_color)
         return eye_color
 
 
