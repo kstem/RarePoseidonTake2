@@ -157,7 +157,7 @@ class GoBoard(object):
                 if self.ko_constraint==point:
                     continue
                 moves.append(point)
-        print(moves)
+        #print(moves)
         return moves
 
 
@@ -294,8 +294,6 @@ class GoBoard(object):
             false_count += 1
         if false_count >= 2:
             return None
-        print("is_eye has")
-        print(eye_color)
         return eye_color
 
 
@@ -454,7 +452,6 @@ class GoBoard(object):
                 if self.board[n]!=EMPTY:
                     fboard = self._flood_fill(n)
                     if not self._liberty_flood(fboard):
-                       # msg = "remember - no Russian"
                        # below: removing last liberty not allowed. remove stone and output error - kaleb
                         c=self._point_to_coord(point)
                         msg = "illegal move:  %s %s captures"%(GoBoardUtil.int_to_color(color), coord_to_position(c)) # no liberties left

@@ -14,7 +14,7 @@ import re
 
 class GtpConnection():
 
-    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = True):
+    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = False):
         """
         object that plays Go using GTP
 
@@ -305,7 +305,6 @@ class GtpConnection():
             board_move = args[1]
             # self.respond("2") remove
             color= GoBoardUtil.color_to_int(board_color)
-            print(color)
             '''
             if color == 9:
                 self.respond('yo0000')
@@ -324,8 +323,6 @@ class GtpConnection():
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
             if move:
                 move = self.board._coord_to_point(move[0],move[1])
-                print("Playing Move")
-                print("ENTERING IF ALMOST")
                 #if GoBoardUtil.generate_random_move(self.board, color) == None:
                 #    print("IN THE FINAL GAME SHOULD BE OVER")
                 #    self.final_score_cmd([])
@@ -339,9 +336,8 @@ class GtpConnection():
                 return
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".format(board_move, str(self.board.get_twoD_board())))
-            print("ENTERING IF ALMOST")
+            #next 2 lines are for determining if end game state
             if GoBoardUtil.generate_random_move(self.board, GoBoardUtil.opponent(color)) == None:
-                print("IN THE FINAL GAME SHOULD BE OVER")
                 self.final_score_cmd([])
             self.respond()
         except Exception as e:
@@ -354,7 +350,8 @@ class GtpConnection():
             
 
     def final_score_cmd(self, args):
-        self.respond("Final Score: " + self.board.final_score(self.komi))
+        #using final_score function aggressively, pretty much a hack -adam
+        self.respond("Game Over. Winner by last move: " + self.board.final_score(self.komi))
         self.respond("Thanks for playing, Goodbye.")
         self.respond("ＡＥＳＴＨＥＴＩＣ")
         quit()
@@ -374,13 +371,13 @@ class GtpConnection():
         try:
             board_color = args[0].lower()
             color = GoBoardUtil.color_to_int(board_color)
-            print(color)
             self.debug_msg("Board:\n{}\nko: {}\n".format(str(self.board.get_twoD_board()),
                                                           self.board.ko_constraint))
             move = self.go_engine.get_move(self.board, color)
             if move is None:
-                self.respond("pass")
-                self.respond("Lol no moves left GG gtfo with that pass bullshit.")
+            # a bit of a hack here, as like a "secondary" check if the random ai goes rogue and tries a pass move. -adam
+                self.respond("Computer tried to pass. No passing allowed.")
+                #self.respond("Lol no moves left GG gtfo with that pass bullshit.")
                 self.final_score_cmd([])
                 #quit()
                 #return
@@ -393,16 +390,13 @@ class GtpConnection():
 
             # move is legal; play it
             self.debug_msg("Color: " + board_color + " ")
-            # print("in genmove_cmd")
             self.board.move(move,color)
             self.debug_msg("Move: {}\nBoard: \n{}\n".format(move, str(self.board.get_twoD_board())))
             move = self.board._point_to_coord(move)
             board_move = GoBoardUtil.format_point(move)
             self.respond(board_move)
-            ##############
-            #print("AT THE FINAL STATEMENT")
+            #the next 2 lines determine if game state is over -adam
             if GoBoardUtil.generate_random_move(self.board, GoBoardUtil.opponent(color)) == None:
-                #print("IN THE FINAL GAME SHOULD BE OVER")
                 self.final_score_cmd([])
         except Exception as e:
             self.respond('Error: {}'.format(str(e)))
