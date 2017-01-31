@@ -9,4 +9,4 @@ play w b1
 # ensure that black can not play ontop of white
 
 play b b1
-#? [Illegal Move: b1]
+#? [illegal move: b b1 occupied]
