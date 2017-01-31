@@ -1,12 +1,5 @@
-still need it to say 'wrong colour' when you input wrong colour 
-    eg 'play g a2' illegal move: r c3 wrong colo
-
 needs to work with gogui regression testing
 
-wrong color issue: player_errors wants an int, but there is not direct integer for evert letter
-so wont send letter to the function, but cant alter it into an int
-
-legal_moves with no colour throws an arror for args, 405 in gtp_connection player_errors
 
 
 ERROR TODO:
