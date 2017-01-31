@@ -30,9 +30,8 @@ class GoBoard(object):
         if not move_inspection: # here when move is not legal
           #  print("not move_inspection") # remove
           #  print("illegal Move: ",msg)
-            raise ValueError("illegal move: ",msg)
-          
-            return False, msg
+            raise ValueError()          
+            return False
         else:
             self.last_played_color = color
             return True
@@ -149,7 +148,7 @@ class GoBoard(object):
                 if self.ko_constraint==point:
                     continue
                 moves.append(point)
-        return moves;
+        return moves
 
 
     def __init__(self, size):
@@ -401,6 +400,8 @@ class GoBoard(object):
         return fboard
 
 
+
+
     def _play_move(self,point, color):
         """
         This function is for playing the move
@@ -420,9 +421,10 @@ class GoBoard(object):
            #illegal move: w [location] occupied
            #TODO: need actual point, eg a4, istead of coords
 
-           
-            msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
-            return False,msg
+            player_errors(1, color, c)
+           # msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
+            
+            return False, ""
         if point == self.ko_constraint:
             msg ="KO move is not permitted!"
             return False , msg
@@ -439,10 +441,11 @@ class GoBoard(object):
                 if self.board[n]!=EMPTY:
                     fboard = self._flood_fill(n)
                     if not self._liberty_flood(fboard):
-                        msg = "remember - no Russian"
-                        print("no russian")
+                       # msg = "remember - no Russian"
                         c=self._point_to_coord(point)
-                        msg = "%s %d %d captures"%(GoBoardUtil.int_to_color(color), c[0],c[1]) # no liberties left
+                        #TODO
+
+                        msg = "illegal move:  %s %s captures"%(GoBoardUtil.int_to_color(color), coord_to_position(c)) # no liberties left
                         self.board[point] = EMPTY
                         return False, msg
                         """
@@ -482,6 +485,7 @@ class GoBoard(object):
             msg = "%s %d %d suicide"%(GoBoardUtil.int_to_color(color), c[0],c[1])
             return False, msg
 
+  
 
     def _neighbors(self,point):
         """
@@ -614,3 +618,54 @@ class GoBoard(object):
         row, col = divmod(point, self.NS)
         return row,col
 
+'''
+#input:
+  int, representing which error
+  1: occupied - stone already there
+  2: wrong number of args - eg 'play c3'
+  3: wrong colour - eg 'play f a1'
+  4: wrong coordinate - eg "play w a99'
+  5: capture - taking last liberty 
+  6: suicide
+
+'''
+def player_errors(issue, color, c):
+    if issue == 1:
+        print('illegal move: %s %s alread occupied'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
+    elif issue == 2:
+        print('illegal move: [input] wrong number of arguments') 
+    elif issue == 3:
+        print('illegal move: %s %s wrong color'%(color, coord_to_position(c)))
+    elif issue == 4:
+        print('illegal move: [colour] [locaton] wrong coordinate')
+    elif issue == 5:
+        print('illegal move: [colour] [locaton] captures')
+    elif issue == 6:
+        print('illegal move: [colour] [locaton] alread occupied')
+    else:
+        print('bruh whatd you do')
+   
+
+
+"""
+        Return coordinates as a string like 'a1', or 'pass'.
+
+        Arguments
+        ---------
+        move : (row, col), or None for pass
+
+        Returns
+        -------
+        The move converted from a tuple to a Go position (e.g. d4)
+"""
+
+def coord_to_position(coord):
+    column_letters = "abcdefghjklmnopqrstuvwxyz"
+    if coord is None:
+        return "pass"
+    row, col = coord
+    if not 0 <= row < 25 or not 0 <= col < 25:
+        raise ValueError
+        #print("yo waddup")
+       # print(column_letters[col-1+ str(row)])
+    return column_letters[col-1]+ str(row) 

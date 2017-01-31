@@ -320,8 +320,12 @@ class GtpConnection():
                 self.debug_msg("Move: {}\nBoard:\n{}\n".format(board_move, str(self.board.get_twoD_board())))
             self.respond()
         except Exception as e:
-            # original: self.respond('Error here get yer error here: {}'.format(str(e)))
-            self.respond("illegal move: {} ".format(str(e)))#+args[1])#+" wrong colour")
+          #  player_errors(1)
+            #here
+            self.respond('{}'.format(str(e)))
+            #self.respond("illegal move: {} ".format(str(e)))#+args[1])#+" wrong colour")
+            pass
+            
             
 
     def final_score_cmd(self, args):
@@ -371,4 +375,34 @@ class GtpConnection():
             self.respond(board_move)
         except Exception as e:
             self.respond('Error: {}'.format(str(e)))
+
+'''
+#input:
+  int, representing which error
+  1: occupied - stone already there
+  2: wrong number of args - eg 'play c3'
+  3: wrong colour - eg 'play f a1'
+  4: wrong coordinate - eg "play w a99'
+  5: capture - taking last liberty 
+  6: suicide
+
+'''
+def player_errors(issue):
+    if issue == 1:
+        sys.stdout.write('illegal move: [colour] [locaton] alread occupied'); sys.stdout.flush()
+    elif issue == 2:
+        sys.stdout.write('illegal move: [input] wrong number of arguments'); sys.stdout.flush()
+    elif issue == 3:
+        sys.stdout.write('illegal move: [colour] [locaton] wrong color'); sys.stdout.flush()
+    elif issue == 4:
+        sys.stdout.write('illegal move: [colour] [locaton] wrong coordinate'); sys.stdout.flush()
+    elif issue == 5:
+        sys.stdout.write('illegal move: [colour] [locaton] captures'); sys.stdout.flush()
+    elif issue == 6:
+        sys.stdout.write('illegal move: [colour] [locaton] alread occupied'); sys.stdout.flush()
+    else:
+        sys.stdout.write('bruh whatd you do'); sys.stdout.flush()
+        
+            
+
 

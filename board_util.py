@@ -115,6 +115,8 @@ class GoBoardUtil(object):
         row, col = move
         if not 0 <= row < 25 or not 0 <= col < 25:
             raise ValueError
+        #print("yo waddup")
+       # print(column_letters[col-1+ str(row)])
         return    column_letters[col-1]+ str(row) 
         
     @staticmethod
@@ -160,6 +162,7 @@ class GoBoardUtil(object):
             raise ValueError("invalid point: '%s'" % s)
         if not (col <= board_size and row <= board_size):
             raise ValueError("[color] %s wrong coordinate" % s)
+            #TODO: need to add color
         return row, col
     
     @staticmethod
