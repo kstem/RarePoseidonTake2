@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Output: nogotest.gtp</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="gogui-regress 1.4.9 (http://gogui.sf.net)">
+<style type="text/css">
+<!--
+body { margin:0; }
+span.comment { color:#999999; }
+span.fail { font-weight:bold; color:#ff5454; }
+span.error { font-weight:bold; color:#ffa954; }
+span.stderr { color:#666666; }
+span.invalid { background:#ff5454;}
+span.pass { font-weight:bold; color:#5eaf5e; }
+span.test { font-weight:bold; }
+-->
+</style>
+</head>
+<body bgcolor="white" text="black" link="#0000ee" vlink="#551a8b">
+<table border="0" width="100%" bgcolor="#91aee8" border="0">
+<tr><td>
+<h1>Output: nogotest.gtp</h1>
+</td></tr>
+</table>
+<table width="100%" bgcolor="#e0e0e0">
+<tr><th align="left">Date:</th><td>January 31, 2017 2:14:28 PM MST</td></tr>
+<tr><th align="left">Host:</th><td>kaleb-N56VJ (Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz)</td></tr>
+<tr><th align="left" valign="top">Command:</th>
+<td valign="top"><tt>./Go1.py</tt></td></tr>
+</table>
+<pre style="margin:1em">
+name
+= Go1
+
+version
+= 0.1
+
+cputime
+? Unknown command
+
+</pre>
+<hr style="margin:1em" size="1">
+<pre style="margin:1em">
+<span class="comment">#no go tests
+</span>
+<span class="command">boardsize 3
+</span>= 
+
+<span class="command">clearboard
+</span><span class="error">? Unknown command
+
+</span>
+<span class="command">play w b1
+</span>= 
+
+<span class="test"><a name="10">10 legal_moves b
+</a>#? [a1 a2 a3 b2 b3 c1 c2 c3]
+= a1 a2 a3 b2 b3 c1 c2 c3
+
+</span><span class="comment"># ensure that black can not play ontop of white
+</span>
+<span class="command">play b b1
+</span><span class="test">#? [illegal move: b b1 already occupied]
+</span><span class="fail">= name 'msg' is not defined
+
+</span></pre>
+<hr style="margin:1em" size="1">
+<pre style="margin:1em">
+</span>cputime
+? Unknown command
+
+quit
+= 
+
+</pre>
+<hr style="margin-bottom:0" size="1">
+<p style="margin-top:1; margin-right:5" align="right"><i><small>Generated on 1/31/17 2:14 PM by gogui-regress 1.4.9 (<a href="http://gogui.sf.net">http://gogui.sf.net</a>)</small></i></p>
+</body>
+</html>
