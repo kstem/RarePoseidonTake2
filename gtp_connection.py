@@ -36,7 +36,7 @@ class GtpConnection():
         sys.stdout = self
         self.go_engine = go_engine
         self.komi = 0
-        self.board = GoBoard(3) #TODO: chang default siz back to 7
+        self.board = GoBoard(3) #TODO: chang default size back to 7
         self.commands = {
             "protocol_version": self.protocol_version_cmd,
             "quit": self.quit_cmd,
@@ -160,13 +160,13 @@ class GtpConnection():
     def error(self, error_msg=''):
         """ Send error msg to stdout and through the GTP connection. """
         sys.stdout.write('? {}\n\n'.format(error_msg)); sys.stdout.flush()
-       # sys.stdout.write('illegal move')
-       #original sys.stdout.write('illegal move: [input]  {}\n\n'.format(error_msg)); sys.stdout.flush()
-       # sys.stdout.write('illegal move: '+elements[0]+' {}\n\n'.format(error_msg))
+        # sys.stdout.write('illegal move')
+        #original sys.stdout.write('illegal move: [input]  {}\n\n'.format(error_msg)); sys.stdout.flush()
+        # sys.stdout.write('illegal move: '+elements[0]+' {}\n\n'.format(error_msg))
 
     def respond(self, response=''):
         """ Send msg to stdout """
-  #      sys.stdout.write("worrrrrrrrdddddddddsssss")
+        #sys.stdout.write("worrrrrrrrdddddddddsssss")
         sys.stdout.write('= {}\n\n'.format(response)); sys.stdout.flush()
 
     def reset(self, size):
@@ -262,7 +262,7 @@ class GtpConnection():
             point = self.board._coord_to_point(*move)
             if not self.board.move(point, BLACK):
                 self.debug_msg("Illegal Move: {}\nBoard:\n{}\n".format(move, str(self.board.get_twoD_board())))
-               # print("if not self.board.move --- in set_free_handicap")
+                # print("if not self.board.move --- in set_free_handicap")
                 #self.debug_msg("Illegal Move: {}\nBoard:\n{}\n".format(move, str(self.board.get_twoD_board())))
         self.respond()
 
@@ -302,7 +302,7 @@ class GtpConnection():
         try:
             board_color = args[0].lower()
             board_move = args[1]
-           # self.respond("2") remove
+            # self.respond("2") remove
             color= GoBoardUtil.color_to_int(board_color)
             print(color)
             '''
@@ -313,13 +313,12 @@ class GtpConnection():
                 #self.respond(color)
                 print('illegal move: ', args[0])
                 '''
-               # player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
-            #TODO: hi need to fix the pass as pastsing isn't allowed - adam
+                # player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
+            #TODO: hi need to fix the pass as passing isn't allowed - adam
             if args[1].lower()=='pass':
-                self.debug_msg("Player {} is passing\n".format(args[0]))
+                #self.debug_msg("Player {} is passing\n".format(args[0]))
                 #self.respond()
-                self.respond("game over, no passing allowed scrub")
-                self.respond(self.board.final_score(self.komi))
+                #self.respond("game over, no passing allowed scrub")
                 return
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
             if move:
@@ -334,7 +333,7 @@ class GtpConnection():
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
             if not self.board.move(move, color):
-               # self.respond("Illegal Move: {}".format(board_move), msg)
+                # self.respond("Illegal Move: {}".format(board_move), msg)
                 self.respond("Illegal Move: {}".format(board_move))
                 return
             else:
@@ -345,7 +344,7 @@ class GtpConnection():
                 self.final_score_cmd([])
             self.respond()
         except Exception as e:
-          #  player_errors(1)
+            #  player_errors(1)
             #here
             self.respond('{}'.format(str(e)))
             #self.respond("illegal move: {} ".format(str(e)))#+args[1])#+" wrong colour")
@@ -393,7 +392,7 @@ class GtpConnection():
 
             # move is legal; play it
             self.debug_msg("Color: " + board_color + " ")
-           # print("in genmove_cmd")
+            # print("in genmove_cmd")
             self.board.move(move,color)
             self.debug_msg("Move: {}\nBoard: \n{}\n".format(move, str(self.board.get_twoD_board())))
             move = self.board._point_to_coord(move)
