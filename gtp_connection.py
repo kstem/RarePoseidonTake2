@@ -14,7 +14,7 @@ import re
 
 class GtpConnection():
 
-    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = True):
+    def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = False):
         """
         object that plays Go using GTP
 
@@ -115,8 +115,8 @@ class GtpConnection():
         command_name = elements[0]; args = elements[1:]
         if self.arg_error(command_name, len(args)):
            # print(' ', args, " wrong number of arguments")
-            player_errors(2, None, None, args)
-            sys.stdout.flush()
+           # player_errors(2, None, None, args)
+            #sys.stdout.flush()
             return
         if command_name in self.commands:
             try:
@@ -159,7 +159,8 @@ class GtpConnection():
 
     def error(self, error_msg=''):
         """ Send error msg to stdout and through the GTP connection. """
-        sys.stdout.write('illegal move')
+        sys.stdout.write('? {}\n\n'.format(error_msg)); sys.stdout.flush()
+       # sys.stdout.write('illegal move')
        #original sys.stdout.write('illegal move: [input]  {}\n\n'.format(error_msg)); sys.stdout.flush()
        # sys.stdout.write('illegal move: '+elements[0]+' {}\n\n'.format(error_msg))
 
@@ -260,8 +261,9 @@ class GtpConnection():
             move = GoBoardUtil.move_to_coord(point, self.board.size)
             point = self.board._coord_to_point(*move)
             if not self.board.move(point, BLACK):
-                print("if not self.board.move --- in set_free_handicap")
                 self.debug_msg("Illegal Move: {}\nBoard:\n{}\n".format(move, str(self.board.get_twoD_board())))
+               # print("if not self.board.move --- in set_free_handicap")
+                #self.debug_msg("Illegal Move: {}\nBoard:\n{}\n".format(move, str(self.board.get_twoD_board())))
         self.respond()
 
     def legal_moves_cmd(self, args):
@@ -302,13 +304,15 @@ class GtpConnection():
             board_move = args[1]
            # self.respond("2") remove
             color= GoBoardUtil.color_to_int(board_color)
+            '''
             if color == 9:
                 self.respond('yo0000')
                 self.respond(args[0])
                 self.respond(args[1])
                 #self.respond(color)
                 print('illegal move: ', args[0])
-                player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
+                '''
+               # player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
             #TODO: hi need to fix the pass as pastsing isn't allowed - adam
             if args[1].lower()=='pass':
                 self.debug_msg("Player {} is passing\n".format(args[0]))
@@ -402,7 +406,7 @@ class GtpConnection():
 
 '''
 def player_errors(issue, color, c, args):
-    arg=args[0]
+    #arg=args[0]
     if issue == 1:
         print('illegal move: %s %s alread occupied'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
     elif issue == 2:

@@ -162,9 +162,9 @@ class GoBoardUtil(object):
             raise ValueError("invalid point: '%s'" % s)
         if not (col <= board_size and row <= board_size):
             #raise ValueError("[color] %s wrong coordinate" % s)
-            print("words")
-            board.player_errors(3, None, point)
+#            board.player_errors(3, None, point)
             #TODO: need to add color HERE
+            raise ValueError("point is off board: '%s'" % s)
         return row, col
     
     @staticmethod
