@@ -147,7 +147,7 @@ class GtpConnection():
         False otherwise
         """
         if cmd in self.argmap and self.argmap[cmd][0] > argnum:
-               # print("yoyoyo what up from the south side", self.argmap[cmd][1]) remove
+                print("yoyoyo what up from the south side", self.argmap[cmd][1]) #kaleb
                 self.error(self.argmap[cmd][1])
                 return True
         return False
