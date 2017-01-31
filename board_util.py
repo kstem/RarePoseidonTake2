@@ -116,7 +116,7 @@ class GoBoardUtil(object):
         if not 0 <= row < 25 or not 0 <= col < 25:
             raise ValueError
         #print("yo waddup")
-       # print(column_letters[col-1+ str(row)])
+        #print(column_letters[col-1+ str(row)])
         return    column_letters[col-1]+ str(row) 
         
     @staticmethod
@@ -180,12 +180,12 @@ class GoBoardUtil(object):
         """convert character representing player color to the appropriate number"""
         color_to_int = {"b": BLACK , "w": WHITE, "e":EMPTY, "BORDER":BORDER, "FLOODFILL":FLOODFILL}
         try:
-           return color_to_int[c] 
+            return color_to_int[c] 
         except:
-           #return 9 
-           raise ValueError("Valid color characters are: b, w, e, BORDER and FLOODFILL. please provide the input in this format ")
-            #raise ValueError(color_to_int[c]) # dont thin this really does anything
-            # find somewhere that has the colour of this thing, then from there send it to the player_error thing
+            #return 9 
+            raise ValueError("Valid color characters are: b, w, e, BORDER and FLOODFILL. please provide the input in this format ")
+            #raise ValueError(color_to_int[c]) # dont think this really does anything
+            #find somewhere that has the colour of this thing, then from there send it to the player_error thing
  
 
 #####################################################3
@@ -194,7 +194,7 @@ class GoBoardUtil(object):
         """convert number representing player color to the appropriate character """
         int_to_color = {BLACK:"b", WHITE:"w", EMPTY:"e", BORDER:"BORDER", FLOODFILL:"FLOODFILL"}
         try:
-           return int_to_color[i] 
+            return int_to_color[i]
         except:
             raise ValueError("Provided integer value for color is invalid")
          
