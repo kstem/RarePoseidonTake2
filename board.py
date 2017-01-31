@@ -27,11 +27,12 @@ class GoBoard(object):
             color
         """
         move_inspection, msg =self._play_move(point,color)
-        
+
         if not move_inspection: # here when move is not legal
-          #  print("not move_inspection") # remove
-          #  print("illegal Move: ",msg)
-           # raise ValueError()          
+           #  attempt to get error output correct. failed - kaleb
+           #  print("not move_inspection") # remove
+           #  print("illegal Move: ",msg)
+           #  raise ValueError()
             return False
         else:
             self.last_played_color = color
@@ -427,14 +428,15 @@ class GoBoard(object):
 
         if self.board[point] != EMPTY:
             c=self._point_to_coord(point)
-            msg = "Row and Column: %d %d is already filled with a %s stone"%(c[0],c[1],GoBoardUtil.int_to_color(color))
+           # below: attempt to show error for playing on spot that has already been played. - kaleb
+           # msg = "Row and Column: %d %d is already filled with a %s stone"%(c[0],c[1],GoBoardUtil.int_to_color(color))
            # stone = self.board[point] # get stone colour currently occupying spot
            # print(stone)
-           #illegal move: w [location] occupied
-           #TODO: need actual point, eg a4, istead of coords
+           # illegal move: w [location] occupied
+           # TODO: need actual point, eg a4, istead of coords
            # print("words and color: ", color)
            # player_errors(1, color, c)
-           # msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
+            msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
             return False, msg
         if point == self.ko_constraint:
             msg ="KO move is not permitted!"
@@ -453,9 +455,8 @@ class GoBoard(object):
                     fboard = self._flood_fill(n)
                     if not self._liberty_flood(fboard):
                        # msg = "remember - no Russian"
+                       # below: removing last liberty not allowed. remove stone and output error - kaleb
                         c=self._point_to_coord(point)
-                        #TODO
-
                         msg = "illegal move:  %s %s captures"%(GoBoardUtil.int_to_color(color), coord_to_position(c)) # no liberties left
                         self.board[point] = EMPTY
                         return False, msg
@@ -480,8 +481,8 @@ class GoBoard(object):
         in_enemy_eye = self._is_eyeish(point) != color
         fboard = self._flood_fill(point)
         self.ko_constraint = single_captures[0] if in_enemy_eye and len(single_captures) == 1 else None
-        #if self._liberty_flood(fboard) and self.suicide: #commented out original to test what self.suicide did since it's just set for True
-        if self._liberty_flood(fboard):
+        #if self._liberty_flood(fboard) and self.suicide: #commented out original to test what self.suicide did since it's just set for True - adam
+        if self._liberty_flood(fboard): #took out suicide - adam
             #non suicidal move
             c=self._point_to_coord(point)
             msg = "Playing a move with %s color in the row and column %d %d is permited"%(GoBoardUtil.int_to_color(color),c[0],c[1])
@@ -492,11 +493,10 @@ class GoBoard(object):
             if cap_inds!= None:
                 self.board[cap_inds]=GoBoardUtil.opponent(color)
             c=self._point_to_coord(point)
-            #todo: a2 not row column
-            msg = "%s %d %d suicide"%(GoBoardUtil.int_to_color(color), c[0],c[1])
+            msg = "%s %d %d suicide"%(GoBoardUtil.int_to_color(color), c[0],c[1])  # suicide message. doesnt get displayed, but correct format - kaleb
             return False, msg
 
-  
+
 
     def _neighbors(self,point):
         """
@@ -629,6 +629,9 @@ class GoBoard(object):
         row, col = divmod(point, self.NS)
         return row,col
 
+
+# made these as a a bit of a hack for error outputs but didnt work. coord_to_position is still used somewhere and returns the position, eg a1 instead of an int - kaleb
+
 '''
 #input:
   int, representing which error
@@ -636,7 +639,7 @@ class GoBoard(object):
   2: wrong number of args - eg 'play c3'
   3: wrong colour - eg 'play f a1'
   4: wrong coordinate - eg "play w a99'
-  5: capture - taking last liberty 
+  5: capture - taking last liberty
   6: suicide
 
 '''
@@ -646,7 +649,7 @@ def player_errors(issue, color, c):
     if issue == 1:
         print('illegal move: %s %s alread occupied'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
     elif issue == 2:
-        print('illegal move: [input] wrong number of arguments') 
+        print('illegal move: [input] wrong number of arguments')
     elif issue == 3:
         print('illegal move: %s %s wrong color'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
     elif issue == 4:
@@ -657,7 +660,7 @@ def player_errors(issue, color, c):
         print('illegal move: [colour] [locaton] alread occupied')
     else:
         print('bruh whatd you do')
-   
+
 
 '''
 '''
@@ -679,5 +682,5 @@ def coord_to_position(coord):
     if not 0 <= row < 25 or not 0 <= col < 25:
         raise ValueError
         #print("yo waddup")
-       # print(column_letters[col-1+ str(row)])
-    return column_letters[col-1]+ str(row) 
+        #print(column_letters[col-1+ str(row)])
+    return column_letters[col-1]+ str(row)
