@@ -114,7 +114,8 @@ class GtpConnection():
             return
         command_name = elements[0]; args = elements[1:]
         if self.arg_error(command_name, len(args)):
-            print(' ', args, " wrong number of arguments")
+           # print(' ', args, " wrong number of arguments")
+            player_errors(2, None, None, args)
             sys.stdout.flush()
             return
         if command_name in self.commands:
@@ -385,23 +386,25 @@ class GtpConnection():
   4: wrong coordinate - eg "play w a99'
   5: capture - taking last liberty 
   6: suicide
+  args
 
 '''
-def player_errors(issue):
+def player_errors(issue, color, c, args):
+    arg=args[0]
     if issue == 1:
-        sys.stdout.write('illegal move: [colour] [locaton] alread occupied'); sys.stdout.flush()
+        print('illegal move: %s %s alread occupied'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
     elif issue == 2:
-        sys.stdout.write('illegal move: [input] wrong number of arguments'); sys.stdout.flush()
+        print(' ', arg, " wrong number of arguments") 
     elif issue == 3:
-        sys.stdout.write('illegal move: [colour] [locaton] wrong color'); sys.stdout.flush()
+        print('illegal move: %s %s wrong color'%(color, coord_to_position(c)))
     elif issue == 4:
-        sys.stdout.write('illegal move: [colour] [locaton] wrong coordinate'); sys.stdout.flush()
+        print('illegal move: [colour] [locaton] wrong coordinate')
     elif issue == 5:
-        sys.stdout.write('illegal move: [colour] [locaton] captures'); sys.stdout.flush()
+        print('illegal move: [colour] [locaton] captures')
     elif issue == 6:
-        sys.stdout.write('illegal move: [colour] [locaton] alread occupied'); sys.stdout.flush()
+        print('illegal move: [colour] [locaton] alread occupied')
     else:
-        sys.stdout.write('bruh whatd you do'); sys.stdout.flush()
+        print('bruh whatd you do')
         
             
 
