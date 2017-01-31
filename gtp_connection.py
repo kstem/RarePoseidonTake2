@@ -63,8 +63,8 @@ class GtpConnection():
             "known_command": (1, 'Usage: known_command CMD_NAME'),
             "set_free_handicap": (1, 'Usage: set_free_handicap MOVE (e.g. A4)'),
             "genmove": (1, 'Usage: genmove {w,b}'),
-            #"play": (2, 'Usage: play {b,w} MOVE'),
-            "play": (2, ' wrong number of arguments'),
+            #"play": (2, 'Usage: play {b,w} MOVE'),  --> original
+            "play": (2, ' wrong number of arguments'), # changed to make it clearer what error its referring to, -Kaleb
             
             "legal_moves": (1, 'Usage: legal_moves {w,b}')
         }
@@ -114,9 +114,10 @@ class GtpConnection():
             return
         command_name = elements[0]; args = elements[1:]
         if self.arg_error(command_name, len(args)):
-           # print(' ', args, " wrong number of arguments")
-           # player_errors(2, None, None, args)
-            #sys.stdout.flush()
+            # another failed attempt at errors -- kaleb
+            # print(' ', args, " wrong number of arguments")
+            # player_errors(2, None, None, args)
+            # sys.stdout.flush()
             return
         if command_name in self.commands:
             try:
