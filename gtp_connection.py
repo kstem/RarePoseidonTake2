@@ -302,6 +302,7 @@ class GtpConnection():
             board_move = args[1]
            # self.respond("2") remove
             color= GoBoardUtil.color_to_int(board_color)
+            print(color)
             if color == 9:
                 self.respond('yo0000')
                 self.respond(args[0])
@@ -319,6 +320,11 @@ class GtpConnection():
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
             if move:
                 move = self.board._coord_to_point(move[0],move[1])
+                print("Playing Move")
+                print("ENTERING IF ALMOST")
+                #if GoBoardUtil.generate_random_move(self.board, color) == None:
+                #    print("IN THE FINAL GAME SHOULD BE OVER")
+                #    self.final_score_cmd([])
             # move == None on pass
             else:
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
@@ -328,6 +334,10 @@ class GtpConnection():
                 return
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".format(board_move, str(self.board.get_twoD_board())))
+            print("ENTERING IF ALMOST")
+            if GoBoardUtil.generate_random_move(self.board, GoBoardUtil.opponent(color)) == None:
+                print("IN THE FINAL GAME SHOULD BE OVER")
+                self.final_score_cmd([])
             self.respond()
         except Exception as e:
           #  player_errors(1)
@@ -359,6 +369,7 @@ class GtpConnection():
         try:
             board_color = args[0].lower()
             color = GoBoardUtil.color_to_int(board_color)
+            print(color)
             self.debug_msg("Board:\n{}\nko: {}\n".format(str(self.board.get_twoD_board()),
                                                           self.board.ko_constraint))
             move = self.go_engine.get_move(self.board, color)
@@ -383,6 +394,11 @@ class GtpConnection():
             move = self.board._point_to_coord(move)
             board_move = GoBoardUtil.format_point(move)
             self.respond(board_move)
+            ##############
+            #print("AT THE FINAL STATEMENT")
+            if GoBoardUtil.generate_random_move(self.board, GoBoardUtil.opponent(color)) == None:
+                #print("IN THE FINAL GAME SHOULD BE OVER")
+                self.final_score_cmd([])
         except Exception as e:
             self.respond('Error: {}'.format(str(e)))
 

@@ -27,6 +27,7 @@ class GoBoard(object):
             color
         """
         move_inspection, msg =self._play_move(point,color)
+        
         if not move_inspection: # here when move is not legal
           #  print("not move_inspection") # remove
           #  print("illegal Move: ",msg)
@@ -101,10 +102,12 @@ class GoBoard(object):
             # Tie
             self.winner = 0
         if self.winner==1:
-            result="B+{}".format( score_black - score_white )
+            #result="B+{}".format( score_black - score_white ) -original
+            result = "B wins due to last play." # -adam
 
         else:
-            result="W+{}".format(score_white - score_black )
+            #result="W+{}".format(score_white - score_black )
+            result = "W wins due to last play." # -adam
 
         return result
 
@@ -153,6 +156,7 @@ class GoBoard(object):
                 if self.ko_constraint==point:
                     continue
                 moves.append(point)
+        print(moves)
         return moves
 
 
