@@ -166,7 +166,7 @@ class GoBoardUtil(object):
             # TODO: need to add color HERE
             #raise ValueError("point is off board: '%s'" % s) -orignal
             #put some custom stuff here for error-checking -adam
-            msg = "bounds" #msg not actually needed here -adam
+            msg = "bounds"
             return False, msg
         return row, col
     
