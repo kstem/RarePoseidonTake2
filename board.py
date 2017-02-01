@@ -26,16 +26,32 @@ class GoBoard(object):
         Return:
             color
         """
-        move_inspection, msg =self._play_move(point,color)
-
-        if not move_inspection: # here when move is not legal
-           #  attempt to get error output correct. failed - kaleb
-           #  print("not move_inspection") # remove
-           #  print("illegal Move: ",msg)
-           #  raise ValueError()
+        print("enter move_inspection")
+        move_inspection, msg = self._play_move(point,color)
+        cl = GoBoardUtil.int_to_color(color)
+        pl = coord_to_position(point)
+        print("COMMENCE THE HACK")
+        ###### HACK TIME COMMENCE
+        if msg == "occupied":
+            raise ValueError("illegal move: {0} {1} occupied".format(cl, pl))
+            return False
+        if msg == "suicide":
+            raise ValueError("illegal move: {0} {1} suicide".format(cl,pl))
+            return False
+        if msg == "captured":
+            raise ValueError("illegal move: {0} {1} capture".format(cl,pl))
+            return False
+        ###### HACK TIME ENDS
+        if move_inspection: 
+            # here when move is not legal
+            #  attempt to get error output correct. failed - kaleb
+            #  print("not move_inspection") # remove
+            #  print("illegal Move: ",msg)
+            #  raise ValueError()
             print("move inspection here")
-            return False, msg
+            return False
         else:
+            print("into the else statement")
             self.last_played_color = color
             return True
 

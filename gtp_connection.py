@@ -337,10 +337,9 @@ class GtpConnection():
             ####start error checking code -adam
             check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size)
             print("bound check")
-            if msg == "bounds":
+            if msg == "bounds": 
                 self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
-               # self.respond(
-                   # "illegal move: {} wrong coordinate".format(args[1]))
+                # self.respond()
                 return
             #if args[0] != "" or args[0] != 'w":
             #    self.respond(
@@ -360,6 +359,7 @@ class GtpConnection():
                 self.respond("illegal move: %s no passing"%(args[0]))
                 return
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
+            print(move)
             print("move check 1")
             if move:
                 move = self.board._coord_to_point(move[0],move[1])
@@ -369,33 +369,18 @@ class GtpConnection():
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
             ####trying idea for error handling here -adam
-            print("move check 2")
-            move_check, err_msg = self.board.move(move, color)
-            print("occupied check")
-            if msg == "occupied":
-                print("in occupied")
-                self.respond("illegal move: %s %s capture".format(args[0],args[1]))
-                #self.respond("illegal move: {0} {1} occupied".format(
-                #    board_color, board_move) + " ")
+     ###############everything works up to here       
+            print("move check")
+            #if not self.board.move(move, color):
+            #    # self.respond("Illegal Move: {}".format(board_move), msg)
+            #    self.respond("Illegal Move: {}".format(board_move))
+            #    return
+            temp = self.board.move(move,color)
+            print(temp)
+            if not _:
+                # self.respond("Illegal Move: {}".format(board_move), msg)
+                self.respond("Illegal Move: {}".format(board_move))
                 return
-            print("misc check")
-            if not self.board.move(move, color):
-                self.respond("illegal move: %s %s capture".format(args[0],args[1]))
-                #self.respond("Illegal Move: {}".format(board_move) + " ")
-                return
-            print("captured check")
-            if msg == "captured":
-                self.respond("illegal move: %s %s capture".format(args[0],args[1]))
-                
-                #self.respond("illegal move: {0} {1} capture".format(args[0],args[1]))
-                return
-            print("suicide check")
-            if msg == "suicide":
-                self.respond("illegal move: %s %s suicide".format(args[0],args[1]))
-                
-                #self.respond("illegal move: {0} {1} suicide".format(args[0],args[1]))
-                return
-            ####end the idea here -adam
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".format(board_move, str(self.board.get_twoD_board())))
             #next 2 lines are for determining if end game state
