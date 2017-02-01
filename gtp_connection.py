@@ -64,7 +64,11 @@ class GtpConnection():
             "set_free_handicap": (1, 'Usage: set_free_handicap MOVE (e.g. A4)'),
             "genmove": (1, 'Usage: genmove {w,b}'),
             #"play": (2, 'Usage: play {b,w} MOVE'),  --> original
+
             #"play": (2, ' wrong number of arguments'), # changed to make it clearer what error its referring to, -Kaleb
+
+            #"play": (2, ' wrong number of arguments'), # changed to make it clearer what error its referring to, -Kaleb
+
             
             #"legal_moves": (1, 'Usage: legal_moves {w,b}')
         }
@@ -281,8 +285,9 @@ class GtpConnection():
         try:
             ####some error checking code below -adam
             if len(args) != 1:
-                self.respond(
-                    "illegal move: {} wrong number of arguments".format(args))
+                self.respond("illegal move: %s wrong number of arguments "%(args[0]))#, args[1]))
+               # self.respond(
+                #    "illegal move: {} wrong number of arguments".format(args))
                 return
             ####end error checking code -adam
             #
@@ -311,8 +316,11 @@ class GtpConnection():
             ####some error checking code below -adam
             print("arg check")
             if len(args) < 2:
-                self.respond(
-                    "illegal move: {} wrong number of arguments".format(args))
+                print("kaleb here in the print satement after arg check")
+                self.respond("illegal move: %s wrong number of arguments"%(args[0]))
+
+               # self.respond(
+                   # "illegal move: {} wrong number of arguments".format(args))
                 return
             ####end error checking code -adam
             ####start error checking code -adam
@@ -320,17 +328,18 @@ class GtpConnection():
             if args[0].lower() != 'b':
                 if args[0].lower() != 'w':
                     print(args[0])
-                    self.respond(
-                        "illegal move: {} wrong color".format(args))
+                    self.respond("illegal move: %s %s wrong color"%(args[0], args[1]))
+                   # self.respond(
+                     #   "illegal move: {} wrong color".format(args))
                     return
             ####end error checking code -adam
             board_color = args[0].lower()
             ####start error checking code -adam
             check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size)
             print("bound check")
-            if msg == "bounds":
-                self.respond(
-                    "illegal move: {} wrong coordinate".format(args))
+            if msg == "bounds": 
+                self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
+                # self.respond()
                 return
             #if args[0] != "" or args[0] != 'w":
             #    self.respond(
@@ -346,6 +355,7 @@ class GtpConnection():
                 #self.debug_msg("Player {} is passing\n".format(args[0]))
                 #self.respond()
                  #self.respond("game over, no passing allowed scrub")
+                print("kaleb here with another fantastic print statement for args[0]: ", args[0]) 
                 self.respond("illegal move: %s no passing"%(args[0]))
                 return
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
@@ -388,7 +398,7 @@ class GtpConnection():
 
     def final_score_cmd(self, args):
         #using final_score function aggressively, pretty much a hack -adam
-        self.respond("Game Over. Winner by last move: " + self.board.final_score(self.komi))
+       # self.respond("Game Over. Winner by last move: " + self.board.final_score(self.komi))
        # self.respond("Thanks for playing, Goodbye.")
         #self.respond("ＡＥＳＴＨＥＴＩＣ")
         self.respond("")
@@ -438,54 +448,5 @@ class GtpConnection():
                 self.final_score_cmd([])
         except Exception as e:
             self.respond('Error: {}'.format(str(e)))
-
-
-
-# below is attempt to make easy error messaging that failed. - kaleb
-
-
-'''
-#input:
-  issue: int, representing which error
-     1: occupied - stone already there
-     2: wrong number of args - eg 'play c3'
-     3: wrong colour - eg 'play f a1'
-     4: wrong coordinate - eg "play w a99'
-     5: capture - taking last liberty 
-     6: suicide
- color: int, representing the color
- c: int, coordinates of play
- args: string. contains color and coords
-  
-
-'''
-'''
-def player_errors(issue, color, c, args):
-    #arg=args[0]
-    if issue == 1:
-        print('illegal move: %s %s alread occupied'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
-    elif issue == 2:
-        print(' ', arg, " wrong number of arguments") 
-    elif issue == 3:
-        print('  %s wrong color'%coord_to_position(c))
-    elif issue == 4:
-        print('illegal move: [colour] [locaton] wrong coordinate')
-    elif issue == 5:
-        print('illegal move: [colour] [locaton] captures')
-    elif issue == 6:
-        print('illegal move: [colour] [locaton] alread occupied')
-    else:
-        print('bruh whatd you do')
-
-def coord_to_position(coord):
-    column_letters = "abcdefghjklmnopqrstuvwxyz"
-    if coord is None:
-        return "pass"
-    row, col = coord
-    if not 0 <= row < 25 or not 0 <= col < 25:
-        raise ValueError
-        #print("yo waddup")
-    return column_letters[col-1]+ str(row) 
-  '''          
 
 

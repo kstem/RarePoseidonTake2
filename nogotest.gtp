@@ -31,9 +31,9 @@ play w b2
 # ensures that it does not allow play to play suicide 
 
 70 play w d99
-#? [illegal move: w d99]
+#? [illegal move: w d99 wrong coordinate]
 # ensures moves are within bounds of the boardsize
-
+ 
 play b a1
 80 legal_moves w
 #? [c1 c3]
@@ -43,5 +43,7 @@ play b a1
 #? [illegal move: w no passing]
 # ensures players cannot pass
 
-100 play w c3
-#? [Game Over. Winner by last move: W wins due to last play.]
+play w c3
+100 legal_moves b
+#? []
+# remaining moves are suicide or would capture pieces. game over
