@@ -148,7 +148,7 @@ class GtpConnection():
         False otherwise
         """
         if cmd in self.argmap and self.argmap[cmd][0] > argnum:
-                print("yoyoyo what up from the south side", self.argmap[cmd][1]) #kaleb
+             #   print("yoyoyo what up from the south side", self.argmap[cmd][1]) #kaleb
                 self.error(self.argmap[cmd][1])
                 return True
         return False
@@ -318,7 +318,8 @@ class GtpConnection():
             if args[1].lower()=='pass':
                 #self.debug_msg("Player {} is passing\n".format(args[0]))
                 #self.respond()
-                #self.respond("game over, no passing allowed scrub")
+                 #self.respond("game over, no passing allowed scrub")
+                self.respond("illegal move: %s no passing"%(args[0]))
                 return
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
             if move:
@@ -352,7 +353,7 @@ class GtpConnection():
        # self.respond("Thanks for playing, Goodbye.")
         #self.respond("ＡＥＳＴＨＥＴＩＣ")
         self.respond("")
-        quit()
+        #quit()
 
     def genmove_cmd(self, args):
         """
