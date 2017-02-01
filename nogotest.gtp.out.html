@@ -23,7 +23,7 @@ span.test { font-weight:bold; }
 </td></tr>
 </table>
 <table width="100%" bgcolor="#e0e0e0">
-<tr><th align="left">Date:</th><td>January 31, 2017 9:34:11 PM MST</td></tr>
+<tr><th align="left">Date:</th><td>January 31, 2017 10:34:46 PM MST</td></tr>
 <tr><th align="left">Host:</th><td>kaleb-N56VJ (Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz)</td></tr>
 <tr><th align="left" valign="top">Command:</th>
 <td valign="top"><tt>./Go1.py</tt></td></tr>
@@ -51,89 +51,127 @@ cputime
 
 
 <span class="command">play w b1
+</span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+Invalid response: a1 a2 a3 b1 b2 b3 c1 c2 c3
 </span>= 
 
 <span class="test"><a name="10">10 play b b1
-</a>#? [illegal move: b b1 occupied]
-= illegal move: b b1 occupied
+</a></span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+</span><span class="test">#? [illegal move: b b1 occupied]
+</span><span class="fail">= illegal move: b b1 wrong coordinate
 
 </span><span class="comment"># ensure that black cannot play ontop of white
 </span>
 <span class="test"><a name="20">20 play c3
-</a>#? [illegal move: c3 wrong number of arguments]
+</a></span><span class="invalid">Invalid response: arg check
+</span><span class="test">#? [illegal move: c3 wrong number of arguments]
 = illegal move: c3 wrong number of arguments
 
 </span><span class="comment"># ensure that the correct number of arguemnts is presented
 </span>
 <span class="command">play b a2
+</span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+Invalid response: a1 a2 a3 b2 b3 c1 c2 c3
 </span>= 
 
-<span class="command">play w c2
+<span class="command">play w c3
+</span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+Invalid response: a1 a3 b2 b3 c1 c2 c3
 </span>= 
 
 <span class="command">play b b3
+</span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+Invalid response: a1 a3 b2 b3 c1 c2
 </span>= 
 
 <span class="test"><a name="30">30 play w a3
-</a>#? [illegal move: w a3 suicide]
+</a></span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+Invalid response: a1 a3 b2 c1
+</span><span class="test">#? [illegal move: w a3 suicide]
 = illegal move: w a3 suicide
 
 </span>
 <span class="test"><a name="40">40 play r c3
-</a></span><span class="invalid">Invalid response: r
+</a></span><span class="invalid">Invalid response: arg check
+Invalid response: color check
 </span><span class="test">#? [illegal move: r c3 wrong color]
 = illegal move: r c3 wrong color
 
 </span>
-<span class="command">play w b2
+<span class="command">play w a1
+</span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+Invalid response: a1 a3 b2 c1
 </span>= 
 
-<span class="test"><a name="50">50 legal_moves b
-</a>#?[a1 a3 c3]
-= a1 a3 c3
+<span class="test"><a name="50">50 legal_moves w
+</a>#?[b2 c1 c2]
+= b2 c1 c2
 
-</span><span class="comment"># ensures that it does not recognize c1 as a vaild move
+</span><span class="comment"># ensures that it does not recognize black's eye as a vaild move
 </span>
-<span class="test"><a name="60">60 play b c1
-</a>#? [illegal move: b c1 suicide]
-= illegal move: b c1 suicide
+<span class="test"><a name="60">60 play b c2
+</a></span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+</span><span class="test">#? [illegal move: b c2 capture]
+</span><span class="fail">= illegal move: b c2 wrong coordinate
 
-</span><span class="comment"># ensures that it does not allow play to play suicide
+</span><span class="comment"># ensures that it does not allow capture
 </span>
 <span class="test"><a name="70">70 play w d99
-</a>#? [illegal move: w d99 wrong coordinate]
+</a></span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+</span><span class="test">#? [illegal move: w d99 wrong coordinate]
 = illegal move: w d99 wrong coordinate
 
 </span><span class="comment"># ensures moves are within bounds of the boardsize
 </span>
-<span class="command">play b a1
+<span class="command">play b b2
+</span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+Invalid response: a3 b2 c1
 </span>= 
 
 <span class="test"><a name="80">80 legal_moves w
-</a>#? [c1 c3]
-= c1 c3
+</a>#? [c1 c2]
+= c1 c2
 
 </span><span class="comment"># ensure that it sees a3 as suicide and that it can play in its own eye
 </span>
 <span class="test"><a name="90">90 play w pass
-</a>#? [illegal move: w no passing]
-</span><span class="fail">= 'NoneType' object is not iterable
+</a></span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+</span><span class="test">#? [illegal move: w pass wrong coordinate]
+= illegal move: w pass wrong coordinate
 
 </span><span class="comment"># ensures players cannot pass
 </span>
-<span class="command">play w c3
-</span>= 
+<span class="command">play w c2
+</span><span class="invalid">Invalid response: arg check
+Invalid response: color check
+</span>= illegal move: w c2 wrong coordinate
 
-<span class="test"><a name="100">100 legal_moves b
+<span class="test"><a name="100">100 legal_moves w
 </a>#? []
-= 
+</span><span class="fail">= c1 c2
 
 </span></pre>
 <hr style="margin:1em" size="1">
 <pre style="margin:1em">
 </span>cputime
-= 
-
-quit
 ? Unknown command
 
+quit
+= 
+
+</pre>
+<hr style="margin-bottom:0" size="1">
+<p style="margin-top:1; margin-right:5" align="right"><i><small>Generated on 1/31/17 10:34 PM by gogui-regress 1.4.9 (<a href="http://gogui.sf.net">http://gogui.sf.net</a>)</small></i></p>
+</body>
+</html>
