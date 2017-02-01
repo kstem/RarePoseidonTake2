@@ -208,17 +208,17 @@ class GoBoard(object):
     def get_all_positions(self):
         """
         Argumnets:
-            color
+            no arguments
         This function returns all spaces on board
         Return:
-            list of empty poisitions by excluding eye points and KO constraint points
+            list of all positions
         """
+        #BECAUSE THIS SHOULD BE PART OF THE INITIALIZATION IN MY HUMBLE OPINION
         moves = []
         for y in range(1,self.size+1,1):
             for x in range(1,self.size+1,1):
                 point = self._coord_to_point(x,y)
                 moves.append(point)
-        #print(moves)
         return moves
 
     def __init__(self, size):
