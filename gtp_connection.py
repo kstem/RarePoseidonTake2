@@ -279,6 +279,13 @@ class GtpConnection():
             board_color : {'b','w'}
         """
         try:
+            ####some error checking code below -adam
+            if len(args) != 1:
+                self.respond(
+                    "illegal move: {} wrong number of arguments".format(args))
+                return
+            ####end error checking code -adam
+            #
             board_color = args[0].lower()
             color= GoBoardUtil.color_to_int(board_color)
             moves=GoBoardUtil.generate_legal_moves(self.board,color)
@@ -301,19 +308,38 @@ class GtpConnection():
             the move to play (e.g. A5)
         """
         try:
+            ####some error checking code below -adam
+            if len(args) < 2:
+                self.respond(
+                    "illegal move: {} wrong number of arguments".format(args))
+                return
+            ####end error checking code -adam
+            ####start error checking code -adam
+            if args[0] == 'b':
+                print(args[0])
+                self.respond(
+                    "illegal move: {} wrong color".format(args))
+                return
+            if args[0] == 'w':
+                self.respond(
+                    "illegal move: {} wrong color".format(args))
+                return
+            ####end error checking code -adam
             board_color = args[0].lower()
+            ####start error checking code -adam
+            check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size)
+            if check_coor is False:
+                self.respond(
+                    "illegal move: {} wrong coordinate".format(args[1]))
+                return
+            #if args[0] != "" or args[0] != 'w":
+            #    self.respond(
+            #        "illegal move: {} wrong color".format(args))
+            #    return
             board_move = args[1]
             # self.respond("2") remove
             color= GoBoardUtil.color_to_int(board_color)
-            '''
-            if color == 9:
-                self.respond('yo0000')
-                self.respond(args[0])
-                self.respond(args[1])
-                #self.respond(color)
-                print('illegal move: ', args[0])
-                '''
-                # player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
+            #player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
             #TODO: hi need to fix the pass as passing isn't allowed - adam
             if args[1].lower()=='pass':
                 #self.debug_msg("Player {} is passing\n".format(args[0]))
@@ -325,12 +351,26 @@ class GtpConnection():
                 move = self.board._coord_to_point(move[0],move[1])
             # move == None on pass
             else:
+                #not sure what this does -adam
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
+                return
+            ####trying idea for error handling here -adam
+            move_check, err_msg = self.board.move(move, color)
+            if msg == "occupied":
+                self.respond("illegal move: {0} {1} occupied".format(
+                    board_color, board_move) + " ")
                 return
             if not self.board.move(move, color):
                 # self.respond("Illegal Move: {}".format(board_move), msg)
-                self.respond("Illegal Move: {}".format(board_move))
+                self.respond("Illegal Move: {}".format(board_move) + " ")
                 return
+            if msg == "captured":
+                self.respond("illegal move: {0} {1} capture".format(args[0],args[1]))
+                return
+            if msg == "suicide":
+                self.respond("illegal move: {0} {1} suicide".format(args[0],args[1]))
+                return
+            ####end the idea here -adam
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".format(board_move, str(self.board.get_twoD_board())))
             #next 2 lines are for determining if end game state
