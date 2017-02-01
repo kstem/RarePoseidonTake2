@@ -33,6 +33,7 @@ class GoBoard(object):
         cr = GoBoardUtil.int_to_color(color)
         pr = coord_to_position(coordinate)
         #print("COMMENCE THE HACK")
+        
         ###### HACK TIME COMMENCE
         # this is pretty dank as it abuses the ValueError, but it works and time is tight so whatev for now -adam
         if msg == "occupied":
@@ -45,6 +46,7 @@ class GoBoard(object):
             raise ValueError("illegal move: %s %s capture"%(cr,pr))
             return False
         ###### HACK TIME ENDS
+        
         if not move_inspection: 
             # here when move is not legal
             #  attempt to get error output correct. failed - kaleb
@@ -87,6 +89,27 @@ class GoBoard(object):
         sboard = np.array(self.board, copy=True)
         # swap out true board for simulation board, and try to play the move
         result, _=self._play_move(point, color)
+        """
+    ###########################
+        #print(point)
+        coordinate = self._point_to_coord(point)
+        cr = GoBoardUtil.int_to_color(color)
+        pr = coord_to_position(coordinate)
+        #print("COMMENCE THE HACK")
+        ###### HACK TIME COMMENCE
+        # this is pretty dank as it abuses the ValueError, but it works and time is tight so whatev for now -adam
+        if msg == "occupied":
+            raise ValueError("illegal move: %s %s occupied"%(cr,pr))
+            return False
+        if msg == "suicide":
+            raise ValueError("illegal move: %s %s suicide"%(cr,pr))
+            return False
+        if msg == "captured":
+            raise ValueError("illegal move: %s %s capture"%(cr,pr))
+            return False
+        ###### HACK TIME ENDS
+    ############################
+        """
         # reset true board; return result
         self.board = sboard
         return result
@@ -314,6 +337,7 @@ class GoBoard(object):
                 false_count += 1
         if at_edge:
             false_count += 1
+        #if false_count >= 2: #testing
         if false_count >= 2:
             return None
         return eye_color
@@ -448,6 +472,7 @@ class GoBoard(object):
 
         if self.board[point] != EMPTY:
             c=self._point_to_coord(point)
+            #print("occupied")
            # below: attempt to show error for playing on spot that has already been played. - kaleb
            # msg = "Row and Column: %d %d is already filled with a %s stone"%(c[0],c[1],GoBoardUtil.int_to_color(color))
            # stone = self.board[point] # get stone colour currently occupying spot
@@ -479,6 +504,7 @@ class GoBoard(object):
                     if not self._liberty_flood(fboard):
                        # below: removing last liberty not allowed. remove stone and output error - kaleb
                         c=self._point_to_coord(point)
+                        #print("captured")
                         #msg = "illegal move:  %s %s captures"%(GoBoardUtil.int_to_color(color), coord_to_position(c)) # no liberties left
                         msg = "captured" #for adams fancy little error check in play_cmd
                         self.board[point] = EMPTY
@@ -513,6 +539,7 @@ class GoBoard(object):
             return True, msg
         else:
             # undoing the move because of being suicidal
+            #print("suicidal")
             self.board[point] = EMPTY
             if cap_inds!= None:
                 self.board[cap_inds]=GoBoardUtil.opponent(color)

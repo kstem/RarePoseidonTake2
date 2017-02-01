@@ -339,11 +339,18 @@ class GtpConnection():
                     return
             ####end error checking code -adam
             ####start error checking code -adam
-            listOfMoves = GoBoardUtil.generate_legal_moves(self.board, 1)
-            if args[1] not in listOfMoves:
+            points_list = self.board.get_empty_positions(GoBoardUtil.color_to_int(args[0]))
+            moves_list = []
+            for thing in points_list:
+                thing = self.board._point_to_coord(thing)
+                thing = GoBoardUtil.format_point(thing)
+                thing.lower()
+                moves_list.append(thing)
+            print(moves_list)
+            if args[1].lower() not in moves_list: #testing strings pls
                 self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
                 return
-            print(listOfMoves)
+            #print(self.board.initial_moves)
             board_color = args[0].lower()
             ####start error checking code -adam
             check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size) #this is kinda broken, but its hacked to work for now. check_coor doesn't do anything
