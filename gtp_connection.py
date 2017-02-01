@@ -285,12 +285,13 @@ class GtpConnection():
         try:
             ####some error checking code below -adam
             if len(args) != 1:
-                self.respond("illegal move: %s %s wrong number of arguments "%(args[0], args[1]))
+                self.respond("illegal move: %s wrong number of arguments "%(args[0]))#, args[1]))
                # self.respond(
                 #    "illegal move: {} wrong number of arguments".format(args))
                 return
             ####end error checking code -adam
             #
+            print("kaleb comment")
             board_color = args[0].lower()
             color= GoBoardUtil.color_to_int(board_color)
             moves=GoBoardUtil.generate_legal_moves(self.board,color)
@@ -316,7 +317,7 @@ class GtpConnection():
             ####some error checking code below -adam
             print("arg check")
             if len(args) < 2:
-                self.respond("illegal move: %s %s wrong number of arguments"%(args[0], args[1]))
+                self.respond("illegal move: %s wrong number of arguments"%(args[0]))
 
                # self.respond(
                    # "illegal move: {} wrong number of arguments".format(args))
@@ -371,6 +372,7 @@ class GtpConnection():
             move_check, err_msg = self.board.move(move, color)
             print("occupied check")
             if msg == "occupied":
+                print("in occupied")
                 self.respond("illegal move: %s %s capture".format(args[0],args[1]))
                 #self.respond("illegal move: {0} {1} occupied".format(
                 #    board_color, board_move) + " ")

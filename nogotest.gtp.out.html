@@ -23,7 +23,7 @@ span.test { font-weight:bold; }
 </td></tr>
 </table>
 <table width="100%" bgcolor="#e0e0e0">
-<tr><th align="left">Date:</th><td>January 31, 2017 6:08:27 PM MST</td></tr>
+<tr><th align="left">Date:</th><td>January 31, 2017 6:29:40 PM MST</td></tr>
 <tr><th align="left">Host:</th><td>kaleb-N56VJ (Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz)</td></tr>
 <tr><th align="left" valign="top">Command:</th>
 <td valign="top"><tt>./Go1.py</tt></td></tr>
@@ -79,8 +79,9 @@ Invalid response: suicide check
 </span>
 <span class="test"><a name="20">20 play c3
 </a></span><span class="invalid">Invalid response: arg check
+Invalid response: kaleb words
 </span><span class="test">#? [illegal move: c3 wrong number of arguments]
-</span><span class="fail">= list index out of range
+= illegal move: c3 wrong number of arguments
 
 </span><span class="comment"># ensure that the correct number of arguemnts is presented
 </span>
@@ -146,7 +147,8 @@ Invalid response: move check 2
 </span>= 'bool' object is not iterable
 
 <span class="test"><a name="50">50 legal_moves b
-</a>#?[a1 a3 c3]
+</a></span><span class="invalid">Invalid response: kaleb comment
+</span><span class="test">#?[a1 a3 c3]
 = a1 a3 c3
 
 </span><span class="comment"># ensures that it does not recognize c1 as a vaild move
@@ -188,7 +190,8 @@ Invalid response: move check 2
 </span>= 'bool' object is not iterable
 
 <span class="test"><a name="80">80 legal_moves w
-</a>#? [c1 c3]
+</a></span><span class="invalid">Invalid response: kaleb comment
+</span><span class="test">#? [c1 c3]
 = c1 c3
 
 </span><span class="comment"># ensure that it sees a3 as suicide and that it can play in its own eye
@@ -222,6 +225,6 @@ quit
 
 </pre>
 <hr style="margin-bottom:0" size="1">
-<p style="margin-top:1; margin-right:5" align="right"><i><small>Generated on 1/31/17 6:08 PM by gogui-regress 1.4.9 (<a href="http://gogui.sf.net">http://gogui.sf.net</a>)</small></i></p>
+<p style="margin-top:1; margin-right:5" align="right"><i><small>Generated on 1/31/17 6:29 PM by gogui-regress 1.4.9 (<a href="http://gogui.sf.net">http://gogui.sf.net</a>)</small></i></p>
 </body>
 </html>
