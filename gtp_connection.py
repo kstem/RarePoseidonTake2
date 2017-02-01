@@ -315,8 +315,10 @@ class GtpConnection():
             ####some error checking code below -adam
             print("arg check")
             if len(args) < 2:
-                self.respond(
-                    "illegal move: {} wrong number of arguments".format(args))
+                self.respond("illegal move: %s %s wrong number of arguments"%(args[0], args[1]))
+
+               # self.respond(
+                   # "illegal move: {} wrong number of arguments".format(args))
                 return
             ####end error checking code -adam
             ####start error checking code -adam
@@ -324,8 +326,9 @@ class GtpConnection():
             if args[0].lower() != 'b':
                 if args[0].lower() != 'w':
                     print(args[0])
-                    self.respond(
-                        "illegal move: {} wrong color".format(args))
+                    self.respond("illegal move: %s %s wrong color"%(args[0], args[1]))
+                   # self.respond(
+                     #   "illegal move: {} wrong color".format(args))
                     return
             ####end error checking code -adam
             board_color = args[0].lower()
@@ -333,8 +336,9 @@ class GtpConnection():
             check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size)
             print("bound check")
             if msg == "bounds":
-                self.respond(
-                    "illegal move: {} wrong coordinate".format(args[1]))
+                self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
+               # self.respond(
+                   # "illegal move: {} wrong coordinate".format(args[1]))
                 return
             #if args[0] != "" or args[0] != 'w":
             #    self.respond(
