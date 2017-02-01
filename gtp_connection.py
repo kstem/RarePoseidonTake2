@@ -284,10 +284,14 @@ class GtpConnection():
         """
         try:
             ####some error checking code below -adam
+            ####TODO: need to pad this code to account for all amounts of args
             if len(args) != 1:
-                self.respond("illegal move: %s wrong number of arguments "%(args[0]))#, args[1]))
-               # self.respond(
+                if len(args) == 1:
+                    self.respond("illegal move: %s wrong number of arguments "%(args[0]))#, args[1]))
+                # self.respond(
                 #    "illegal move: {} wrong number of arguments".format(args))
+                    return
+                self.respond("illegal move: %s wrong number of arguments "%(args))
                 return
             ####end error checking code -adam
             #
@@ -314,45 +318,42 @@ class GtpConnection():
         """
         try:
             ####some error checking code below -adam
-            print("arg check")
+            #print("arg check")
             if len(args) < 2:
                 if len(args) == 0:
                     self.respond("illegal move: wrong number of arguments")
-                print("kaleb here in the print satement after arg check")
+                #print("kaleb here in the print satement after arg check")
                 self.respond("illegal move: %s wrong number of arguments"%(args[0]))
 
-               # self.respond(
+               # self.respond() -original i think
                    # "illegal move: {} wrong number of arguments".format(args))
                 return
             ####end error checking code -adam
             ####start error checking code -adam
-            print("color check")
+            # yes this code is dirty please don't judge I will fix -adam
+            #print("color check")
             if args[0].lower() != 'b':
                 if args[0].lower() != 'w':
                     print(args[0])
                     self.respond("illegal move: %s %s wrong color"%(args[0], args[1]))
-                   # self.respond(
-                     #   "illegal move: {} wrong color".format(args))
                     return
             ####end error checking code -adam
             board_color = args[0].lower()
             ####start error checking code -adam
-            check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size)
-            print("bound check")
+            check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size) #this is kinda broken, but its hacked to work for now. check_coor doesn't do anything
+            #print("bound check")
             if msg == "bounds": 
                 self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
-                # self.respond()
+                # self.respond() -og
                 return
-            #if args[0] != "" or args[0] != 'w":
-            #    self.respond(
-            #        "illegal move: {} wrong color".format(args))
-            #    return
             board_move = args[1]
-            # self.respond("2") remove
+            # self.respond("2") remove -not sure what this is -adam
             color= GoBoardUtil.color_to_int(board_color)
             #player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
             #TODO: hi need to fix the pass as passing isn't allowed - adam
-            print("pass check")
+            #print("pass check")
+            # okay so the pass should be taken care of by the wrong number of args, wrong color and wrong coordinate checks.
+            """
             if args[1].lower()=='pass':
                 #self.debug_msg("Player {} is passing\n".format(args[0]))
                 #self.respond()
@@ -360,9 +361,9 @@ class GtpConnection():
                 print("kaleb here with another fantastic print statement for args[0]: ", args[0]) 
                 self.respond("illegal move: %s no passing"%(args[0]))
                 return
+                """
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
-            print(move)
-            print("move check 1")
+            #print("move check 1")
             if move:
                 move = self.board._coord_to_point(move[0],move[1])
             # move == None on pass
@@ -370,16 +371,14 @@ class GtpConnection():
                 #not sure what this does -adam
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
-            ####trying idea for error handling here -adam
-     ###############everything works up to here       
-            print("move check")
+            ####trying idea for error handling here -adam      
+            #print("move check")
             #if not self.board.move(move, color):
             #    # self.respond("Illegal Move: {}".format(board_move), msg)
             #    self.respond("Illegal Move: {}".format(board_move))
             #    return
-            temp = self.board.move(move,color)
-            print(temp)
-            if not temp:
+            temp = self.board.move(move,color) #running the move function as it checks if the move is possible, then storing the boolean -adam
+            if not temp: #this should never happen, but if it does..... idk -adam
                 # self.respond("Illegal Move: {}".format(board_move), msg)
                 self.respond("Illegal Move: {}".format(board_move))
                 return
@@ -388,10 +387,12 @@ class GtpConnection():
             #next 2 lines are for determining if end game state
             if GoBoardUtil.generate_random_move(self.board, GoBoardUtil.opponent(color)) == None:
                 self.final_score_cmd([])
+                #seems to always work, be it human players or ai (so far) -adam
             self.respond()
         except Exception as e:
             #  player_errors(1) -> attempt to get error woriking for occupied with hack, didnt really - kaleb
             #  here
+            # Adam here, I think we can remove the statements about this now, as we can now leave it do its thing for catching anything thats unordinary -adam
             self.respond('{}'.format(str(e)))
             #self.respond("illegal move: {} ".format(str(e)))#+args[1])#+" wrong colour") # issue was printed wrong colour for multiople errors - kaleb
             pass

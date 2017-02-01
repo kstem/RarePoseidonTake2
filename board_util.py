@@ -166,7 +166,8 @@ class GoBoardUtil(object):
             # TODO: need to add color HERE
             #raise ValueError("point is off board: '%s'" % s) -orignal
             #put some custom stuff here for error-checking -adam
-            msg = "bounds"
+            # hi, adam here. So is this stuff to go? -adam
+            msg = "bounds" # -adam
             return False, msg
         return row, col
     
