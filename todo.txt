@@ -5,31 +5,31 @@ needs to work with gogui regression testing
 ERROR TODO:
 todo for errors: 
 
-occupied space mst have error as such --
+occupied space mst have error as such --TESTED/
 	if black stone already there, and white tries to play
 	illegal move: w [location] occupied
 
 _________________________________
 for "play c3" --
-	illegal move: c3 wrong number of arguments
+	illegal move: c3 wrong number of arguments  -- TESTED/
  ?? -> arg_error -> error -> argmap
 
 ___________________________________________________
 play r c3
-	illegal move: r c3 wrong color
+	illegal move: r c3 wrong color  -- TESTED/
 
 _______________________________________________________
 
 play w c99
-	illegal move: w c99 wrong coordinate
+	illegal move: w c99 wrong coordinate -- TESTED/
 
 _______________________________________________________
 for capturng stone
-	if black is going to capture white -- 	
-	illegal move: b a2 captures
+	if black is going to capture white -- 	TESTED/
+	illegal move: b a2 capture
 _______________________________________________________
 
 suicide:
-	illegal move: w a2 suicide
+	illegal move: w a2 suicide  -- TESTED/
 
 

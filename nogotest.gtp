@@ -4,9 +4,44 @@ boardsize 3
 clear_board
 
 play w b1
-10 legal_moves b
-#? [a1 a2 a3 b2 b3 c1 c2 c3]
-# ensure that black can not play ontop of white
-
-play b b1
+10 play b b1
 #? [illegal move: b b1 occupied]
+# ensure that black cannot play ontop of white
+
+20 play c3
+#? [illegal move: c3 wrong number of arguments]
+# ensure that the correct number of arguemnts is presented
+
+play b a2
+play w c2
+play b b3
+30 play w a3
+#? [illegal move: w a3 capture]
+
+40 play r c3
+#? [illegal move: r c3 wrong color]
+
+play w b2
+50 legal_moves b
+#?[a1 a3 c3]
+# ensures that it does not recognize c1 as a vaild move
+
+60 play b c1
+#? [illegal move: b c1 suicide]
+# ensures that it does not allow play to play suicide 
+
+70 play w d99
+#? [illegal move: w d99]
+# ensures moves are within bounds of the boardsize
+
+play b a1
+80 legal_moves w
+#? [c1 c3]
+# ensure that it sees a3 as suicide and that it can play in its own eye
+
+90 play w pass
+#? [illegal move: w no passing]
+# ensures players cannot pass
+
+100 play w c3
+#? [Game Over. Winner by last move: W wins due to last play.]
