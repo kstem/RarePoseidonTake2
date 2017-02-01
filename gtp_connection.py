@@ -430,10 +430,10 @@ class GtpConnection():
 
     def final_score_cmd(self, args):
         #using final_score function aggressively, pretty much a hack -adam
-       # self.respond("Game Over. Winner by last move: " + self.board.final_score(self.komi))
+        #self.respond("Game Over. Winner by last move: " + self.board.final_score(self.komi))
        # self.respond("Thanks for playing, Goodbye.")
         #self.respond("ＡＥＳＴＨＥＴＩＣ")
-        self.respond("")
+        self.respond()
         #quit()
 
     def genmove_cmd(self, args):
