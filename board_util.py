@@ -164,7 +164,10 @@ class GoBoardUtil(object):
             # raise ValueError("[color] %s wrong coordinate" % s)
             # board.player_errors(3, None, point)
             # TODO: need to add color HERE
-            raise ValueError("point is off board: '%s'" % s)
+            #raise ValueError("point is off board: '%s'" % s) -orignal
+            #put some custom stuff here for error-checking -adam
+            msg = "bounds" #msg not actually needed here -adam
+            return False, msg
         return row, col
     
     @staticmethod

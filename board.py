@@ -33,7 +33,7 @@ class GoBoard(object):
            #  print("not move_inspection") # remove
            #  print("illegal Move: ",msg)
            #  raise ValueError()
-            return False
+            return False, msg
         else:
             self.last_played_color = color
             return True
@@ -434,7 +434,9 @@ class GoBoard(object):
            # TODO: need actual point, eg a4, istead of coords
            # print("words and color: ", color)
            # player_errors(1, color, c)
-            msg = "%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1])
+            #msg = str("%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1]))
+            #msg = str("{0} {1} {2} occupied").format(GoBoardUtil.int_to_color(color), c[0], c[1])
+            msg = "occupied" # -adam
             return False, msg
         if point == self.ko_constraint:
             msg ="KO move is not permitted!"
@@ -454,7 +456,8 @@ class GoBoard(object):
                     if not self._liberty_flood(fboard):
                        # below: removing last liberty not allowed. remove stone and output error - kaleb
                         c=self._point_to_coord(point)
-                        msg = "illegal move:  %s %s captures"%(GoBoardUtil.int_to_color(color), coord_to_position(c)) # no liberties left
+                        #msg = "illegal move:  %s %s captures"%(GoBoardUtil.int_to_color(color), coord_to_position(c)) # no liberties left
+                        msg = "captured" #for adams fancy little error check in play_cmd
                         self.board[point] = EMPTY
                         return False, msg
                         """
@@ -490,7 +493,8 @@ class GoBoard(object):
             if cap_inds!= None:
                 self.board[cap_inds]=GoBoardUtil.opponent(color)
             c=self._point_to_coord(point)
-            msg = "%s %d %d suicide"%(GoBoardUtil.int_to_color(color), c[0],c[1])  # suicide message. doesnt get displayed, but correct format - kaleb
+            #msg = "%s %d %d suicide"%(GoBoardUtil.int_to_color(color), c[0],c[1])  # suicide message. doesnt get displayed, but correct format - kaleb
+            msg = "suicide"
             return False, msg
 
 
