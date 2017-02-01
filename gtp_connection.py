@@ -286,17 +286,31 @@ class GtpConnection():
         """
         try:
             ####some error checking code below -adam
+            """
             ####TODO: need to pad this code to account for all amounts of args
+            if len(args)  == 0:
+                self.respond("illegal move: wrong number of arguments ")
             if len(args) != 1:
-                if len(args) == 1:
-                    self.respond("illegal move: %s wrong number of arguments "%(args[0]))#, args[1]))
+                if len(args) == 2:
+                    self.respond("illegal move: %s %s wrong number of arguments "%(args[0],args[1]))
                 # self.respond(
                 #    "illegal move: {} wrong number of arguments".format(args))
                     return
+                #TODO: fix this since it outputs ugly list
                 self.respond("illegal move: %s wrong number of arguments "%(args))
                 return
+            if len(args) == 1:
+                ####start error checking code -adam
+                # yes this code is dirty please don't judge I will fix -adam
+                print("color check")
+                if args[0].lower() != 'b':
+                    if args[0].lower() != 'w':
+                        self.respond("illegal move: %s wrong color"%(args[0]))
+                        return
+            ####end error checking code -adam
             ####end error checking code -adam
             #
+            """
             board_color = args[0].lower()
             color= GoBoardUtil.color_to_int(board_color)
             moves=GoBoardUtil.generate_legal_moves(self.board,color)
