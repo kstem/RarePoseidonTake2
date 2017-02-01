@@ -285,8 +285,9 @@ class GtpConnection():
         try:
             ####some error checking code below -adam
             if len(args) != 1:
-                self.respond(
-                    "illegal move: {} wrong number of arguments".format(args))
+                self.respond("illegal move: %s %s wrong number of arguments "%(args[0], args[1]))
+               # self.respond(
+                #    "illegal move: {} wrong number of arguments".format(args))
                 return
             ####end error checking code -adam
             #
@@ -370,21 +371,26 @@ class GtpConnection():
             move_check, err_msg = self.board.move(move, color)
             print("occupied check")
             if msg == "occupied":
-                self.respond("illegal move: {0} {1} occupied".format(
-                    board_color, board_move) + " ")
+                self.respond("illegal move: %s %s capture".format(args[0],args[1]))
+                #self.respond("illegal move: {0} {1} occupied".format(
+                #    board_color, board_move) + " ")
                 return
             print("misc check")
             if not self.board.move(move, color):
-                # self.respond("Illegal Move: {}".format(board_move), msg)
-                self.respond("Illegal Move: {}".format(board_move) + " ")
+                self.respond("illegal move: %s %s capture".format(args[0],args[1]))
+                #self.respond("Illegal Move: {}".format(board_move) + " ")
                 return
             print("captured check")
             if msg == "captured":
-                self.respond("illegal move: {0} {1} capture".format(args[0],args[1]))
+                self.respond("illegal move: %s %s capture".format(args[0],args[1]))
+                
+                #self.respond("illegal move: {0} {1} capture".format(args[0],args[1]))
                 return
             print("suicide check")
             if msg == "suicide":
-                self.respond("illegal move: {0} {1} suicide".format(args[0],args[1]))
+                self.respond("illegal move: %s %s suicide".format(args[0],args[1]))
+                
+                #self.respond("illegal move: {0} {1} suicide".format(args[0],args[1]))
                 return
             ####end the idea here -adam
             else:
@@ -454,54 +460,5 @@ class GtpConnection():
                 self.final_score_cmd([])
         except Exception as e:
             self.respond('Error: {}'.format(str(e)))
-
-
-
-# below is attempt to make easy error messaging that failed. - kaleb
-
-
-'''
-#input:
-  issue: int, representing which error
-     1: occupied - stone already there
-     2: wrong number of args - eg 'play c3'
-     3: wrong colour - eg 'play f a1'
-     4: wrong coordinate - eg "play w a99'
-     5: capture - taking last liberty 
-     6: suicide
- color: int, representing the color
- c: int, coordinates of play
- args: string. contains color and coords
-  
-
-'''
-'''
-def player_errors(issue, color, c, args):
-    #arg=args[0]
-    if issue == 1:
-        print('illegal move: %s %s alread occupied'%(GoBoardUtil.int_to_color(color), coord_to_position(c)))
-    elif issue == 2:
-        print(' ', arg, " wrong number of arguments") 
-    elif issue == 3:
-        print('  %s wrong color'%coord_to_position(c))
-    elif issue == 4:
-        print('illegal move: [colour] [locaton] wrong coordinate')
-    elif issue == 5:
-        print('illegal move: [colour] [locaton] captures')
-    elif issue == 6:
-        print('illegal move: [colour] [locaton] alread occupied')
-    else:
-        print('bruh whatd you do')
-
-def coord_to_position(coord):
-    column_letters = "abcdefghjklmnopqrstuvwxyz"
-    if coord is None:
-        return "pass"
-    row, col = coord
-    if not 0 <= row < 25 or not 0 <= col < 25:
-        raise ValueError
-        #print("yo waddup")
-    return column_letters[col-1]+ str(row) 
-  '''          
 
 
