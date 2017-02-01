@@ -31,9 +31,9 @@ play w b2
 # ensures that it does not allow play to play suicide 
 
 70 play w d99
-#? [illegal move: w d99]
+#? [illegal move: w d99 wrong coordinate]
 # ensures moves are within bounds of the boardsize
-
+ 
 play b a1
 80 legal_moves w
 #? [c1 c3]

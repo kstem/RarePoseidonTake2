@@ -64,7 +64,7 @@ class GtpConnection():
             "set_free_handicap": (1, 'Usage: set_free_handicap MOVE (e.g. A4)'),
             "genmove": (1, 'Usage: genmove {w,b}'),
             #"play": (2, 'Usage: play {b,w} MOVE'),  --> original
-            "play": (2, ' wrong number of arguments'), # changed to make it clearer what error its referring to, -Kaleb
+            z"play": (2, ' wrong number of arguments'), # changed to make it clearer what error its referring to, -Kaleb
             
             "legal_moves": (1, 'Usage: legal_moves {w,b}')
         }
