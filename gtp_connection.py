@@ -15,6 +15,7 @@ import re
 class GtpConnection():
 
     def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = False):
+        #ugly outfile, doesn't work in windows environment
         """
         object that plays Go using GTP
 
@@ -318,7 +319,7 @@ class GtpConnection():
         """
         try:
             ####some error checking code below -adam
-            #print("arg check")
+            print("arg check")
             if len(args) < 2:
                 if len(args) == 0:
                     self.respond("illegal move: wrong number of arguments")
@@ -331,13 +332,18 @@ class GtpConnection():
             ####end error checking code -adam
             ####start error checking code -adam
             # yes this code is dirty please don't judge I will fix -adam
-            #print("color check")
+            print("color check")
             if args[0].lower() != 'b':
                 if args[0].lower() != 'w':
-                    print(args[0])
                     self.respond("illegal move: %s %s wrong color"%(args[0], args[1]))
                     return
             ####end error checking code -adam
+            ####start error checking code -adam
+            listOfMoves = GoBoardUtil.generate_legal_moves(self.board, 1)
+            if args[1] not in listOfMoves:
+                self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
+                return
+            print(listOfMoves)
             board_color = args[0].lower()
             ####start error checking code -adam
             check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size) #this is kinda broken, but its hacked to work for now. check_coor doesn't do anything
@@ -354,7 +360,7 @@ class GtpConnection():
             #print("pass check")
             # okay so the pass should be taken care of by the wrong number of args, wrong color and wrong coordinate checks.
             """
-            if args[1].lower()=='pass':
+            if args[1].lower()=='pass': #note this may have been showing NoneType comparison -adam
                 #self.debug_msg("Player {} is passing\n".format(args[0]))
                 #self.respond()
                  #self.respond("game over, no passing allowed scrub")
