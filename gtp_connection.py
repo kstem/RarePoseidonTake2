@@ -316,6 +316,8 @@ class GtpConnection():
             ####some error checking code below -adam
             print("arg check")
             if len(args) < 2:
+                if len(args) == 0:
+                    self.respond("illegal move: wrong number of arguments")
                 print("kaleb here in the print satement after arg check")
                 self.respond("illegal move: %s wrong number of arguments"%(args[0]))
 
@@ -377,7 +379,7 @@ class GtpConnection():
             #    return
             temp = self.board.move(move,color)
             print(temp)
-            if not _:
+            if not temp:
                 # self.respond("Illegal Move: {}".format(board_move), msg)
                 self.respond("Illegal Move: {}".format(board_move))
                 return
