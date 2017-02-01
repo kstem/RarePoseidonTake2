@@ -12,6 +12,7 @@ from board_util import GoBoardUtil, BLACK, WHITE, EMPTY, BORDER, FLOODFILL
 import numpy as np
 import re
 
+
 class GtpConnection():
 
     def __init__(self, go_engine,outfile = '/tmp/gtp_log', debug_mode = False):
@@ -339,7 +340,8 @@ class GtpConnection():
                     return
             ####end error checking code -adam
             ####start error checking code -adam
-            points_list = self.board.get_empty_positions(GoBoardUtil.color_to_int(args[0]))
+            #points_list = self.board.get_empty_positions(GoBoardUtil.color_to_int(args[0]))
+            points_list = self.board.get_all_positions()
             moves_list = []
             for thing in points_list:
                 thing = self.board._point_to_coord(thing)
