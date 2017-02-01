@@ -58,15 +58,15 @@ class GtpConnection():
         # used for argument checking
         # values: (required number or arguments, error message on argnum failure)
         self.argmap = {
-            "boardsize": (1, 'Usage: boardsize INT'),
+            #"boardsize": (1, 'Usage: boardsize INT'),
             "komi": (1, 'Usage: komi FLOAT'),
             "known_command": (1, 'Usage: known_command CMD_NAME'),
             "set_free_handicap": (1, 'Usage: set_free_handicap MOVE (e.g. A4)'),
             "genmove": (1, 'Usage: genmove {w,b}'),
             #"play": (2, 'Usage: play {b,w} MOVE'),  --> original
-            "play": (2, ' wrong number of arguments'), # changed to make it clearer what error its referring to, -Kaleb
+            #"play": (2, ' wrong number of arguments'), # changed to make it clearer what error its referring to, -Kaleb
             
-            "legal_moves": (1, 'Usage: legal_moves {w,b}')
+            #"legal_moves": (1, 'Usage: legal_moves {w,b}')
         }
     
     def __del__(self):
@@ -148,8 +148,8 @@ class GtpConnection():
         False otherwise
         """
         if cmd in self.argmap and self.argmap[cmd][0] > argnum:
-                print("yoyoyo what up from the south side", self.argmap[cmd][1]) #kaleb
-                self.error(self.argmap[cmd][1])
+                #print("yoyoyo what up from the south side", self.argmap[cmd][1]) #kaleb
+                #self.error(self.argmap[cmd][1])
                 return True
         return False
 
@@ -309,26 +309,26 @@ class GtpConnection():
         """
         try:
             ####some error checking code below -adam
+            print("arg check")
             if len(args) < 2:
                 self.respond(
                     "illegal move: {} wrong number of arguments".format(args))
                 return
             ####end error checking code -adam
             ####start error checking code -adam
-            if args[0] == 'b':
-                print(args[0])
-                self.respond(
-                    "illegal move: {} wrong color".format(args))
-                return
-            if args[0] == 'w':
-                self.respond(
-                    "illegal move: {} wrong color".format(args))
-                return
+            print("color check")
+            if args[0].lower() != 'b':
+                if args[0].lower() != 'w':
+                    print(args[0])
+                    self.respond(
+                        "illegal move: {} wrong color".format(args))
+                    return
             ####end error checking code -adam
             board_color = args[0].lower()
             ####start error checking code -adam
             check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size)
-            if check_coor is False:
+            print("bound check")
+            if msg == "bounds":
                 self.respond(
                     "illegal move: {} wrong coordinate".format(args[1]))
                 return
@@ -341,12 +341,14 @@ class GtpConnection():
             color= GoBoardUtil.color_to_int(board_color)
             #player_errors(3, 2, args[1], args) #TODO: here. '2' to try and force it to work 
             #TODO: hi need to fix the pass as passing isn't allowed - adam
+            print("pass check")
             if args[1].lower()=='pass':
                 #self.debug_msg("Player {} is passing\n".format(args[0]))
                 #self.respond()
                 #self.respond("game over, no passing allowed scrub")
                 return
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
+            print("move check 1")
             if move:
                 move = self.board._coord_to_point(move[0],move[1])
             # move == None on pass
@@ -355,18 +357,23 @@ class GtpConnection():
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
             ####trying idea for error handling here -adam
+            print("move check 2")
             move_check, err_msg = self.board.move(move, color)
+            print("occupied check")
             if msg == "occupied":
                 self.respond("illegal move: {0} {1} occupied".format(
                     board_color, board_move) + " ")
                 return
+            print("misc check")
             if not self.board.move(move, color):
                 # self.respond("Illegal Move: {}".format(board_move), msg)
                 self.respond("Illegal Move: {}".format(board_move) + " ")
                 return
+            print("captured check")
             if msg == "captured":
                 self.respond("illegal move: {0} {1} capture".format(args[0],args[1]))
                 return
+            print("suicide check")
             if msg == "suicide":
                 self.respond("illegal move: {0} {1} suicide".format(args[0],args[1]))
                 return
