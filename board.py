@@ -26,13 +26,10 @@ class GoBoard(object):
         Return:
             color
         """
-        #print("enter move_inspection")
         move_inspection, msg = self._play_move(point,color)
-        #print(point)
         coordinate = self._point_to_coord(point)
         cr = GoBoardUtil.int_to_color(color)
         pr = coord_to_position(coordinate)
-        #print("COMMENCE THE HACK")
         
         ###### HACK TIME COMMENCE
         # this is pretty dank as it abuses the ValueError, but it works and time is tight so whatev for now -adam
@@ -49,15 +46,11 @@ class GoBoard(object):
         
         if not move_inspection: 
             # here when move is not legal
-            #  attempt to get error output correct. failed - kaleb
-            #  print("not move_inspection") # remove
             #  print("illegal Move: ",msg)
             #  raise ValueError()
             # hi, adam here. This should never enter this state, but if it does.... at least it's handled. The move just won't be completed, no output. -adam
-            #print("move inspection here")
             return False
         else:
-            #print("into the else statement")
             self.last_played_color = color
             return True
 
@@ -487,17 +480,10 @@ class GoBoard(object):
 
         if self.board[point] != EMPTY:
             c=self._point_to_coord(point)
-            #print("occupied")
-           # below: attempt to show error for playing on spot that has already been played. - kaleb
-           # msg = "Row and Column: %d %d is already filled with a %s stone"%(c[0],c[1],GoBoardUtil.int_to_color(color))
            # stone = self.board[point] # get stone colour currently occupying spot
            # print(stone)
            # illegal move: w [location] occupied
-           # TODO: need actual point, eg a4, istead of coords
-           # print("words and color: ", color)
            # player_errors(1, color, c)
-            #msg = str("%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1]))
-            #msg = str("{0} {1} {2} occupied").format(GoBoardUtil.int_to_color(color), c[0], c[1])
             # hi, adam here. I think this is good to go for now -adam
             msg = "occupied" # -adam
             return False, msg
@@ -519,7 +505,6 @@ class GoBoard(object):
                     if not self._liberty_flood(fboard):
                        # below: removing last liberty not allowed. remove stone and output error - kaleb
                         c=self._point_to_coord(point)
-                        #print("captured")
                         #msg = "illegal move:  %s %s captures"%(GoBoardUtil.int_to_color(color), coord_to_position(c)) # no liberties left
                         msg = "captured" #for adams fancy little error check in play_cmd
                         self.board[point] = EMPTY
@@ -554,7 +539,6 @@ class GoBoard(object):
             return True, msg
         else:
             # undoing the move because of being suicidal
-            #print("suicidal")
             self.board[point] = EMPTY
             if cap_inds!= None:
                 self.board[cap_inds]=GoBoardUtil.opponent(color)
@@ -748,6 +732,5 @@ def coord_to_position(coord):
     row, col = coord
     if not 0 <= row < 25 or not 0 <= col < 25:
         raise ValueError("Problem with the input for me") # added comment -adam
-        #print("yo waddup")
         #print(column_letters[col-1+ str(row)])
     return column_letters[col-1]+ str(row)

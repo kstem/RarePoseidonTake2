@@ -120,9 +120,7 @@ class GtpConnection():
             return
         command_name = elements[0]; args = elements[1:]
         if self.arg_error(command_name, len(args)):
-            # another failed attempt at errors -- kaleb
-            # print(' ', args, " wrong number of arguments")
-            # player_errors(2, None, None, args)
+            # player_errors(2, None, None, args) # this necessary? -adam
             # sys.stdout.flush()
             return
         if command_name in self.commands:
@@ -154,7 +152,6 @@ class GtpConnection():
         False otherwise
         """
         if cmd in self.argmap and self.argmap[cmd][0] > argnum:
-                #self.error(self.argmap[cmd][1])
                 self.error(self.argmap[cmd][1])
                 return True
         return False
@@ -338,7 +335,6 @@ class GtpConnection():
             if len(args) < 2:
                 if len(args) == 0:
                     self.respond("illegal move: wrong number of arguments")
-                #print("kaleb here in the print satement after arg check")
                 self.respond("illegal move: %s wrong number of arguments"%(args[0]))
 
                # self.respond() -original i think
@@ -354,7 +350,7 @@ class GtpConnection():
                     return
             ####end error checking code -adam
             ####start error checking code -adam
-            #points_list = self.board.get_empty_positions(GoBoardUtil.color_to_int(args[0]))
+            #get all the moves to test it the args are suitable, then send off to other error checking for more specific checks -adam
             points_list = self.board.get_all_positions()
             moves_list = []
             for thing in points_list:
@@ -366,11 +362,9 @@ class GtpConnection():
             if args[1].lower() not in moves_list: #testing strings pls
                 self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
                 return
-            #print(self.board.initial_moves)
             board_color = args[0].lower()
             ####start error checking code -adam
             check_coor, msg = GoBoardUtil.move_to_coord(args[1],self.board.size) #this is kinda broken, but its hacked to work for now. check_coor doesn't do anything
-            #print("bound check")
             if msg == "bounds": 
                 self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
                 # self.respond() -og
@@ -392,7 +386,6 @@ class GtpConnection():
                 return
                 """
             move = GoBoardUtil.move_to_coord(args[1], self.board.size)
-            #print("move check 1")
             if move:
                 move = self.board._coord_to_point(move[0],move[1])
             # move == None on pass
@@ -400,8 +393,7 @@ class GtpConnection():
                 #not sure what this does -adam
                 self.error("Error in executing the move %s, check given move: %s"%(move,args[1]))
                 return
-            ####trying idea for error handling here -adam      
-            #print("move check")
+            ####trying idea for error handling here -adam
             #if not self.board.move(move, color):
             #    # self.respond("Illegal Move: {}".format(board_move), msg)
             #    self.respond("Illegal Move: {}".format(board_move))
@@ -457,7 +449,6 @@ class GtpConnection():
             if move is None:
             # a bit of a hack here, as like a "secondary" check if the random ai goes rogue and tries a pass move. -adam
                 self.respond("Computer tried to pass. No passing allowed.")
-                #self.respond("Lol no moves left GG gtfo with that pass bullshit.")
                 self.final_score_cmd([])
                 #quit()
                 #return

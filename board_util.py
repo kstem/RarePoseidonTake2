@@ -115,7 +115,6 @@ class GoBoardUtil(object):
         row, col = move
         if not 0 <= row < 25 or not 0 <= col < 25:
             raise ValueError
-        #print("yo waddup")
         #print(column_letters[col-1+ str(row)])
         return    column_letters[col-1]+ str(row) 
         
@@ -163,10 +162,7 @@ class GoBoardUtil(object):
         if not (col <= board_size and row <= board_size):
             # raise ValueError("[color] %s wrong coordinate" % s)
             # board.player_errors(3, None, point)
-            # TODO: need to add color HERE
             #raise ValueError("point is off board: '%s'" % s) -orignal
-            #put some custom stuff here for error-checking -adam
-            # hi, adam here. So is this stuff to go? -adam
             msg = "bounds" # -adam
             return False, msg
         return row, col
