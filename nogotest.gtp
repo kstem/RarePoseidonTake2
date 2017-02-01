@@ -13,7 +13,7 @@ play w b1
 # ensure that the correct number of arguemnts is presented
 
 play b a2
-play w c2
+play w c3
 play b b3
 30 play w a3
 #? [illegal move: w a3 suicide]
@@ -21,28 +21,28 @@ play b b3
 40 play r c3
 #? [illegal move: r c3 wrong color]
 
-play w b2
-50 legal_moves b
-#?[a1 a3 c3]
-# ensures that it does not recognize c1 as a vaild move
+play w a1
+50 legal_moves w
+#?[b2 c1 c2]
+# ensures that it does not recognize black's eye as a vaild move
 
-60 play b c1
-#? [illegal move: b c1 suicide]
-# ensures that it does not allow play to play suicide 
+60 play b c2
+#? [illegal move: b c2 capture]
+# ensures that it does not allow capture
 
 70 play w d99
 #? [illegal move: w d99 wrong coordinate]
 # ensures moves are within bounds of the boardsize
  
-play b a1
+play b b2
 80 legal_moves w
-#? [c1 c3]
+#? [c1 c2]
 # ensure that it sees a3 as suicide and that it can play in its own eye
 
 90 play w pass
-#? [illegal move: w no passing]
+#? [illegal move: w pass wrong coordinate]
 # ensures players cannot pass
 
-play w c3
-100 legal_moves b
+play w c2
+100 legal_moves w
 #? []
