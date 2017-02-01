@@ -16,7 +16,7 @@ play b a2
 play w c2
 play b b3
 30 play w a3
-#? [illegal move: w a3 capture]
+#? [illegal move: w a3 suicide]
 
 40 play r c3
 #? [illegal move: r c3 wrong color]
@@ -46,4 +46,3 @@ play b a1
 play w c3
 100 legal_moves b
 #? []
-# remaining moves are suicide or would capture pieces. game over
