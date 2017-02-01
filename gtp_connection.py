@@ -377,7 +377,7 @@ class GtpConnection():
             #    return
             temp = self.board.move(move,color)
             print(temp)
-            if not _:
+            if not temp:
                 # self.respond("Illegal Move: {}".format(board_move), msg)
                 self.respond("Illegal Move: {}".format(board_move))
                 return
