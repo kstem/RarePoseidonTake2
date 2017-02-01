@@ -316,6 +316,8 @@ class GtpConnection():
             ####some error checking code below -adam
             print("arg check")
             if len(args) < 2:
+                if len(args) == 0:
+                    self.respond("illegal move: wrong number of arguments")
                 print("kaleb here in the print satement after arg check")
                 self.respond("illegal move: %s wrong number of arguments"%(args[0]))
 
