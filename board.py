@@ -33,6 +33,7 @@ class GoBoard(object):
            #  print("not move_inspection") # remove
            #  print("illegal Move: ",msg)
            #  raise ValueError()
+            print("move inspection here")
             return False, msg
         else:
             self.last_played_color = color
