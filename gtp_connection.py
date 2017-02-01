@@ -331,7 +331,7 @@ class GtpConnection():
         """
         try:
             ####some error checking code below -adam
-            print("arg check")
+        #    print("arg check")
             if len(args) < 2:
                 if len(args) == 0:
                     self.respond("illegal move: wrong number of arguments")
@@ -343,7 +343,7 @@ class GtpConnection():
             ####end error checking code -adam
             ####start error checking code -adam
             # yes this code is dirty please don't judge I will fix -adam
-            print("color check")
+            #print("color check")
             if args[0].lower() != 'b':
                 if args[0].lower() != 'w':
                     self.respond("illegal move: %s %s wrong color"%(args[0], args[1]))
@@ -358,7 +358,7 @@ class GtpConnection():
                 thing = GoBoardUtil.format_point(thing)
                 thing.lower()
                 moves_list.append(thing)
-            print(moves_list)
+            #print(moves_list)
             if args[1].lower() not in moves_list: #testing strings pls
                 self.respond("illegal move: %s %s wrong coordinate"%(args[0], args[1]))
                 return
@@ -422,10 +422,10 @@ class GtpConnection():
 
     def final_score_cmd(self, args):
         #using final_score function aggressively, pretty much a hack -adam
-       # self.respond("Game Over. Winner by last move: " + self.board.final_score(self.komi))
+        #self.respond("Game Over. Winner by last move: " + self.board.final_score(self.komi))
        # self.respond("Thanks for playing, Goodbye.")
         #self.respond("ＡＥＳＴＨＥＴＩＣ")
-        self.respond("")
+        self.respond()
         #quit()
 
     def genmove_cmd(self, args):
