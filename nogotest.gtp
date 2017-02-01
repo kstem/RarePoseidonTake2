@@ -43,5 +43,7 @@ play b a1
 #? [illegal move: w no passing]
 # ensures players cannot pass
 
-100 play w c3
-#? [Game Over. Winner by last move: W wins due to last play.]
+play w c3
+100 legal_moves b
+#? []
+# remaining moves are suicide or would capture pieces. game over
