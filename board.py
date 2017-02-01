@@ -26,15 +26,15 @@ class GoBoard(object):
         Return:
             color
         """
-        print("enter move_inspection")
+        #print("enter move_inspection")
         move_inspection, msg = self._play_move(point,color)
-        print(point)
+        #print(point)
         coordinate = self._point_to_coord(point)
         cr = GoBoardUtil.int_to_color(color)
         pr = coord_to_position(coordinate)
-        #pl = "a3"
-        print("COMMENCE THE HACK")
+        #print("COMMENCE THE HACK")
         ###### HACK TIME COMMENCE
+        # this is pretty dank as it abuses the ValueError, but it works and time is tight so whatev for now -adam
         if msg == "occupied":
             raise ValueError("illegal move: %s %s occupied"%(cr,pr))
             return False
@@ -51,16 +51,17 @@ class GoBoard(object):
             #  print("not move_inspection") # remove
             #  print("illegal Move: ",msg)
             #  raise ValueError()
-            print("move inspection here")
+            # hi, adam here. This should never enter this state, but if it does.... at least it's handled. The move just won't be completed, no output. -adam
+            #print("move inspection here")
             return False
         else:
-            print("into the else statement")
+            #print("into the else statement")
             self.last_played_color = color
             return True
 
     @staticmethod
     def showboard(board,bd_size):
-        #TODO: would be nice to have a nicer printout of the board
+        #TODO: would be nice to have a nicer printout of the board 
         pass
 
 
@@ -122,6 +123,7 @@ class GoBoard(object):
         else:
             # Tie
             self.winner = 0
+        # hi so I changed this to not worry about the score and just output the last play person -adam
         if self.winner==1:
             #result="B+{}".format( score_black - score_white ) -original
             result = "B wins due to last play." # -adam
@@ -456,6 +458,7 @@ class GoBoard(object):
            # player_errors(1, color, c)
             #msg = str("%s %d %d occupied"%(GoBoardUtil.int_to_color(color),c[0], c[1]))
             #msg = str("{0} {1} {2} occupied").format(GoBoardUtil.int_to_color(color), c[0], c[1])
+            # hi, adam here. I think this is good to go for now -adam
             msg = "occupied" # -adam
             return False, msg
         if point == self.ko_constraint:
@@ -504,6 +507,7 @@ class GoBoard(object):
         #if self._liberty_flood(fboard) and self.suicide: #commented out original to test what self.suicide did since it's just set for True - adam
         if self._liberty_flood(fboard): #took out suicide - adam
             #non suicidal move
+            # still not sure what self.suicide is for -adam
             c=self._point_to_coord(point)
             msg = "Playing a move with %s color in the row and column %d %d is permited"%(GoBoardUtil.int_to_color(color),c[0],c[1])
             return True, msg
@@ -701,7 +705,7 @@ def coord_to_position(coord):
         return "pass"
     row, col = coord
     if not 0 <= row < 25 or not 0 <= col < 25:
-        raise ValueError
+        raise ValueError("Problem with the input for me") # added comment -adam
         #print("yo waddup")
         #print(column_letters[col-1+ str(row)])
     return column_letters[col-1]+ str(row)
